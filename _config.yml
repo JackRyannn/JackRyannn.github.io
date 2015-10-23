@@ -1,25 +1,28 @@
 # Site settings
-
-title: Strata # Title of your site
-email: your-email@domain.com # Your contant email
-
+title:JackRyannn’s Blog
+email:982767079@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "" # the base hostname & protocol for your site
 
-# Social links.
-# Replace the word 'example' with your username if you want to include the icon in the left sidebar
-# Delete the word 'example' if you don't want to include the icon in the left sidebar
+# User setting
+owner:JackRyannn
+email:982767079@qq.com
+facebook_username:
+twitter_username:
+github_username:JackRyannn
+address:
+  - line:
+  - line:
+  # Feel free to add more lines here 
+telephone:
+copyright:
 
-twitter_username:     example  # Replace this with your Twitter username
-github_username:      example  # Replace this with your GitHub username
-linkedin_username:    example  # Replace this with your LinkedIn username
-google_plus_username: example  # Replace this with your Google+ username
-facebook_username:    example  # Replace this with your Facebook username
-dribbble_username:    example  # Replace this with your Dribbble username
+# API settings
+google_api_key:
 
 # Build settings
 markdown: kramdown
