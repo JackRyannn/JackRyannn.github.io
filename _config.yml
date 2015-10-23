@@ -1,7 +1,7 @@
 # Site settings
 title:JackRyannn’s Blog
 email:982767079@qq.com
-description: > # this means to ignore newlines until "baseurl:"
+description: it’s an amazing blog> # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
@@ -11,18 +11,18 @@ url: "" # the base hostname & protocol for your site
 # User setting
 owner:JackRyannn
 email:982767079@qq.com
-facebook_username:
-twitter_username:
+facebook_username:facebook
+twitter_username:twitter
 github_username:JackRyannn
 address:
-  - line:
-  - line:
+  - line:address
+  - line:address2
   # Feel free to add more lines here 
-telephone:
-copyright:
+telephone:18888888888
+copyright:copyright
 
 # API settings
-google_api_key:
+google_api_key:null
 
 # Build settings
 markdown: kramdown
