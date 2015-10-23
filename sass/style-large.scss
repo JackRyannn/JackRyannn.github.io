@@ -2,32 +2,51 @@
 @import 'mixins';
 
 /*
-	Read Only by HTML5 UP
+	Strata by HTML5 UP
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-$size-header: 20em;
+$size-header-width:		30%;
+$size-header-pad:		3em;
 
-/* Basic */
-
-	body, input, select, textarea {
-		font-size: 11pt;
-	}
-	
 /* Header */
 
 	#header {
-		width: $size-header;
-	}
-	
-/* Wrapper */
+		padding: ($size-header-pad * 2) $size-header-pad $size-header-pad $size-header-pad;
+		width: $size-header-width;
 
-	#wrapper {
-		@if $side-header == 'right' {
-			padding-right: $size-header;
+		h1 {
+			font-size: 1.25em;
+			
+			br {
+				display: none;
+			}
 		}
-		@else {
-			padding-left: $size-header;
+	}
+
+/* Footer */
+
+	#footer {
+		padding: 0 $size-header-pad ($size-header-pad + $size-element-margin) $size-header-pad;
+		width: $size-header-width;
+
+		.copyright {
+			li {
+				border-left-width: 0;
+				display: block;
+				line-height: 2.25em;
+				margin-left: 0;
+				padding-left: 0;
+			}
 		}
+	}
+
+/* Main */
+
+	#main {
+		margin-left: $size-header-width;
+		max-width: none;
+		padding: ($size-header-pad * 2) $size-header-pad $size-header-pad $size-header-pad;
+		width: calc(100% - #{$size-header-width});
 	}
