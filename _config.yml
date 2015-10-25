@@ -1,7 +1,7 @@
 # Jekyll configuration
 
 name: JackRyannn 
-description: 现在是一只迷途的羔羊
+description: A sheep who get lost
 
 # Url is currently only used only for the RSS feed in feed.xml
 url: http://jackryannn.github.io
@@ -12,6 +12,7 @@ baseurl: ‘JackRyannn.github.io’
 
 social:
   github: jackryannn
+  rss: feed.xml
 
 # Google Analytics key, leave blank to ignore
 google_analytics_key:

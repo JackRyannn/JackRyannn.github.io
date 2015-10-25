@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>JackRyannn</title>
-		<description>现在是一只迷途的羔羊</description>
+		<description>A sheep who get lost</description>
 		<link>http://jackryannn.github.io‘JackRyannn.github.io’</link>
 		<atom:link href="http://jackryannn.github.io‘JackRyannn.github.io’/feed.xml" rel="self" type="application/rss+xml" />
 		
@@ -77,8 +77,8 @@ Out-of-the box it has: &lt;/p&gt;
             class=&quot;careers wc-img-replace&quot; target=&quot;_blank&quot;&gt;Careers&lt;/a&gt;
     &lt;/li&gt;
     &lt;li&gt;
-        &lt;a title=&quot; RSS&quot;
-            href=&quot;http://jackryannn.github.io/&quot;
+        &lt;a title=&quot;feed.xml RSS&quot;
+            href=&quot;http://jackryannn.github.io/feed.xml&quot;
             class=&quot;rss wc-img-replace&quot; target=&quot;_blank&quot;&gt;RSS&lt;/a&gt;
     &lt;/li&gt;
 &lt;/ul&gt;
