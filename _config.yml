@@ -13,6 +13,7 @@ baseurl:
 social:
   github: jackryannn
   rss: feed.xml
+  encoding: utf-8
 
 # Google Analytics key, leave blank to ignore
 google_analytics_key:
