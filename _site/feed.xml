@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>JackRyannn</title>
+		<description>现在是一只迷途的羔羊</description>
+		<link>http://jackryannn.github.io/jekyll-clean-dark</link>
+		<atom:link href="http://jackryannn.github.io/jekyll-clean-dark/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Jekyll Dark Clean Theme</title>
+				<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Here is a sample post for Jekyll-Clean-Dark theme. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Get it from &lt;a href=&quot;https://github.com/streetturtle/jekyll-clean-dark&quot;&gt;github&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See the &lt;a href=&quot;http://pavelmakhov.com/jekyll-clean-dark&quot;&gt;live demo&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See it &lt;a href=&quot;http://pavelmakhov.com&quot;&gt;in action on my blog&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This theme was created on top of &lt;a href=&quot;https://scotte.github.io&quot;&gt;Jekyll Clean theme&lt;/a&gt; by Scotte.&lt;/p&gt;
+
+&lt;p&gt;This theme uses some parts of Twitter Bootstrap, which allows it looks nice on a mobile devices using a collapsable nav bar and hiding the sidebar.&lt;/p&gt;
+
+&lt;p&gt;Here how it looks like on iPhone 5:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jackryannn.github.io/jekyll-clean-dark/images/iphone_portrait.PNG&quot; alt=&quot;My helpful screenshot&quot;&gt;
+&lt;img src=&quot;http://jackryannn.github.io/jekyll-clean-dark/images/iphone_landscape.PNG&quot; alt=&quot;My helpful screenshot&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;And on iPad mini:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jackryannn.github.io/jekyll-clean-dark/images/ipad_portrait.PNG&quot; alt=&quot;My helpful screenshot&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://jackryannn.github.io/jekyll-clean-dark/images/ipad_landscape.PNG&quot; alt=&quot;My helpful screenshot&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Optionally you can use:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://disqus.com&quot;&gt;Disqus&lt;/a&gt; as a comments system;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.google.com/analytics/&quot;&gt;Google Analyticse&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://metrica.yandex.com&quot;&gt;Yandex Metrika&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;Blog tags.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Also you can have social icons which could lead to your social acounts. 
+Out-of-the box it has: &lt;/p&gt;
+
+&lt;ul class=&quot;social-media&quot;&gt;
+    &lt;li&gt;
+        &lt;a title=&quot;jackryannn on Github&quot;
+            href=&quot;https://github.com/jackryannn&quot;
+            class=&quot;github wc-img-replace&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot; on StackOverflow&quot;
+            href=&quot;http://stackoverflow.com/users/1252056/&quot;
+            class=&quot;stackoverflow wc-img-replace&quot; target=&quot;_blank&quot;&gt;StackoverFlow&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot;jackryannn on LinkedIn&quot;
+            href=&quot;https://www.linkedin.com/in/&quot;
+            class=&quot;linkedin wc-img-replace&quot; target=&quot;_blank&quot;&gt;LinkedIn&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot; on Instagram&quot;
+            href=&quot;https://instagram.com/&quot;
+            class=&quot;instagram wc-img-replace&quot; target=&quot;_blank&quot;&gt;Instagram&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot; on LinkedIn&quot;
+            href=&quot;http://lastfm.com/user/&quot;
+            class=&quot;lastfm wc-img-replace&quot; target=&quot;_blank&quot;&gt;LastFm&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot; on Careers&quot;
+            href=&quot;https://careers.stackoverflow.com/&quot;
+            class=&quot;careers wc-img-replace&quot; target=&quot;_blank&quot;&gt;Careers&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a title=&quot; RSS&quot;
+            href=&quot;http://jackryannn.github.io/&quot;
+            class=&quot;rss wc-img-replace&quot; target=&quot;_blank&quot;&gt;RSS&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can easily add more by putting svg images in a /css/social folder and adding css styles for them.&lt;/p&gt;
+
+&lt;p&gt;All these features could be set up in &lt;code&gt;_config.yml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;If you dont&amp;#39;t have your own blog you can clone this repository and put your articles in a &lt;code&gt;_posts&lt;/code&gt; folder.
+If you already have your own blog then I think you can clone this repository and copy-paste content keeping your &lt;code&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;After you will have to set up your &lt;code&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;license&quot;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;The content of this theme is distributed and licensed under a &lt;a href=&quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;&gt;Creative Commons Attribution 4.0 License&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In other words: you can do anything you want with this theme on any site, just please
+provide a link to the original theme on github.&lt;/p&gt;
+
+&lt;p&gt;This theme includes the following files which are the properties of their
+respective owners:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;js/bootstrap.min.js - &lt;a href=&quot;http://getbootstrap.com&quot;&gt;bootstrap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;css/bootstrap.min.css - &lt;a href=&quot;http://getbootstrap.com&quot;&gt;bootstrap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;js/jquery.min.js - &lt;a href=&quot;https://jquery.com&quot;&gt;jquery&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Sat, 23 Aug 2014 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2014/08/jekyll-clean-theme</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2014/08/jekyll-clean-theme</guid>
+			</item>
+		
+			<item>
+				<title>Lorem ipsum dolor sit amet</title>
+				<description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam metus, commodo sit amet ante a, finibus efficitur lorem. Maecenas egestas purus in tempor volutpat. Sed dapibus tortor nec sem suscipit ullamcorper. Nulla nec lorem lacus. Phasellus condimentum massa quis dolor consequat viverra ut ac magna. Ut a consequat nisi. Vivamus at leo ut turpis convallis lacinia. Curabitur eu placerat quam. Donec ultricies faucibus dui, a tincidunt lorem lobortis condimentum.&lt;/p&gt;
+
+&lt;p&gt;Quisque aliquet consectetur justo sit amet convallis. Nunc vel aliquet ipsum, sit amet elementum justo. Vivamus id magna mi. Cras luctus est vel ipsum sagittis pellentesque. Vivamus ante elit, porttitor vitae quam quis, fermentum malesuada risus. Integer nec lectus vel lacus cursus tristique in euismod ipsum. Duis ut varius enim. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi et elit eu tortor lacinia sollicitudin non in lacus.&lt;/p&gt;
+
+&lt;p&gt;Integer at viverra turpis. Duis aliquam mattis sapien tempor eleifend. Mauris nec eleifend risus, quis mollis neque. Vivamus non dapibus justo, vel ornare magna. Nunc in nulla venenatis, imperdiet diam in, accumsan massa. Etiam congue augue ipsum, sit amet rutrum nisi blandit quis. Cras in lectus non lorem auctor consequat a vel sem. Aliquam erat volutpat. Fusce lobortis vel orci vitae ullamcorper. Phasellus id eleifend eros. Mauris vulputate, nisi vel auctor auctor, quam enim tincidunt felis, vitae fermentum odio tortor eget est. Integer ornare blandit lectus a accumsan.&lt;/p&gt;
+</description>
+				<pubDate>Wed, 23 Jul 2014 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2014/07/Lorem-ipsum-dolor-sit-amet</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2014/07/Lorem-ipsum-dolor-sit-amet</guid>
+			</item>
+		
+			<item>
+				<title>Maecenas feugiat fringilla nibh</title>
+				<description>&lt;p&gt;Maecenas feugiat fringilla nibh ut mattis. Sed non metus sit amet mi luctus feugiat in quis sem. Vivamus pulvinar commodo bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas sapien nulla, eleifend in dolor et, rutrum maximus velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus malesuada egestas. Phasellus pulvinar vulputate urna in tempor. In vel sapien ullamcorper, condimentum ipsum ut, porttitor turpis. Nam auctor erat sed lectus tempus euismod. Nunc ipsum quam, condimentum ac bibendum sit amet, sodales nec metus.&lt;/p&gt;
+
+&lt;p&gt;Vivamus a ullamcorper ipsum. Donec dictum eleifend massa, rhoncus consequat sem tempor nec. Ut bibendum luctus gravida. Nullam eleifend laoreet quam, nec tincidunt dolor tincidunt non. Aenean vel magna massa. Pellentesque sit amet tincidunt ante. Nulla posuere varius elit eu consequat. Sed vitae tortor scelerisque lacus eleifend condimentum. Nulla vitae neque sed lorem sagittis pretium eu nec est. Aliquam in euismod risus, vel vulputate orci.&lt;/p&gt;
+
+&lt;p&gt;Praesent sit amet auctor justo. Suspendisse pretium rutrum vehicula. Cras ut porta urna. Morbi massa odio, eleifend vitae dictum eget, mattis nec metus. Praesent pellentesque metus eu massa pharetra facilisis. Suspendisse potenti. Vestibulum pellentesque pharetra tristique. Nam ut lobortis felis. Proin sit amet consequat ipsum. Curabitur et mattis justo, sit amet feugiat lectus. Sed eleifend eget arcu non pretium. Suspendisse rhoncus erat quis leo laoreet rhoncus. Aliquam quis metus vitae enim cursus sodales. In euismod tortor id odio fermentum, non pretium ipsum iaculis. Quisque consectetur elementum nisi, et posuere odio vulputate ac. Ut consequat, velit eget fermentum ultrices, ligula odio fringilla diam, sit amet accumsan elit velit tempus dolor.&lt;/p&gt;
+</description>
+				<pubDate>Mon, 23 Jun 2014 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2014/06/Maecenas-feugiat-fringilla-nibh</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2014/06/Maecenas-feugiat-fringilla-nibh</guid>
+			</item>
+		
+			<item>
+				<title>Cum sociis natoque penatibus</title>
+				<description>&lt;p&gt;Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus fermentum facilisis velit eu auctor. Maecenas tincidunt, leo tempor bibendum auctor, ligula lorem ultricies tellus, ac auctor lorem libero a sapien. Donec ac suscipit tellus. Quisque vitae placerat lorem. In ullamcorper malesuada risus, eget fringilla lacus dignissim at. Proin faucibus, nibh vel molestie scelerisque, lorem urna tempus lacus, id viverra odio dolor sit amet odio. In hendrerit, orci vel scelerisque luctus, arcu purus aliquet turpis, a bibendum nulla est et dui.&lt;/p&gt;
+
+&lt;p&gt;Praesent pellentesque posuere lectus eget condimentum. Ut vitae nisi diam. Quisque vitae ipsum magna. Aliquam pretium laoreet tortor quis volutpat. Donec congue, nisl nec consequat varius, enim enim consectetur felis, a viverra libero elit in ligula. Cras posuere ipsum vel mi scelerisque, eu interdum velit elementum. Duis eu posuere est. Ut vestibulum urna eu viverra fringilla. Aliquam tempus nisi eros, vitae posuere nulla fermentum in. Praesent et justo eros. Proin eleifend justo vel justo condimentum ullamcorper. Curabitur vel vehicula lectus. Mauris sed ex ac ipsum ultrices bibendum at id tortor. Aenean dictum magna ac nisi posuere euismod. Ut fermentum, nulla quis venenatis varius, risus nulla dictum felis, ut dictum eros libero vitae justo.&lt;/p&gt;
+
+&lt;p&gt;Integer aliquam tellus vel libero eleifend, condimentum euismod odio tincidunt. Vivamus felis ante, faucibus quis urna nec, volutpat pulvinar quam. Cras dictum libero ac augue bibendum, et pretium ex pharetra. Vivamus suscipit et erat id eleifend. Proin vulputate, quam sit amet pretium fermentum, felis neque scelerisque metus, a rhoncus quam nisi sit amet urna. Sed et commodo libero, laoreet rutrum eros. Vivamus tempor, leo eget scelerisque molestie, sapien augue viverra tortor, et semper arcu eros ut elit. Sed pulvinar ipsum in semper facilisis.&lt;/p&gt;
+</description>
+				<pubDate>Sun, 23 Jun 2013 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2013/06/Cum-sociis-natoque-penatibus</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2013/06/Cum-sociis-natoque-penatibus</guid>
+			</item>
+		
+			<item>
+				<title>Nulla vel risus dapibus</title>
+				<description>&lt;p&gt;Nulla vel risus dapibus, fringilla nunc id, interdum magna. Vivamus non diam egestas, bibendum elit sed, condimentum quam. Integer eu ipsum ultrices, tincidunt nibh at, auctor sem. Duis iaculis purus a aliquet gravida. Sed ornare, leo venenatis dignissim condimentum, nibh arcu iaculis dui, nec vulputate ante eros laoreet sem. Fusce dapibus, ante eu blandit tincidunt, odio quam vulputate libero, et interdum tellus lorem eleifend nisi. Nam elementum vel sapien sed rhoncus. Praesent commodo neque odio. Praesent a nisl nec neque laoreet dignissim. Quisque vitae felis a nisl sodales consequat ut ac mi. Etiam varius gravida accumsan. In sed lectus nec ipsum commodo efficitur. Ut vehicula diam eu justo pellentesque, in pulvinar lorem dapibus. Donec ornare metus vitae turpis malesuada, ut aliquet dolor vulputate. Aenean eget ipsum elit. Suspendisse tempor sagittis dictum.&lt;/p&gt;
+
+&lt;p&gt;Vivamus dapibus justo vitae tellus dignissim, non interdum odio egestas. Maecenas tincidunt sem non consequat bibendum. Aliquam cursus, enim sed rutrum porta, nisl tellus ultrices ipsum, vel vestibulum orci tellus sit amet quam. Pellentesque ut viverra lacus. Suspendisse potenti. Ut augue enim, hendrerit sed interdum sed, ullamcorper sit amet ex. Donec at mi at erat hendrerit commodo at non eros. Fusce commodo nec quam at rhoncus.&lt;/p&gt;
+
+&lt;p&gt;Aliquam molestie urna at turpis venenatis, et placerat lorem volutpat. Sed gravida arcu id lectus viverra eleifend. Sed in metus sit amet ante luctus dignissim. Etiam in sodales justo, in iaculis odio. Vestibulum accumsan felis vitae cursus pharetra. Nulla congue ipsum est, sed vulputate odio pulvinar id. Maecenas a sollicitudin turpis.&lt;/p&gt;
+</description>
+				<pubDate>Thu, 23 May 2013 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2013/05/Nulla-vel-risus-dapibus</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2013/05/Nulla-vel-risus-dapibus</guid>
+			</item>
+		
+			<item>
+				<title>Vivamus porttitor porta tortor</title>
+				<description>&lt;p&gt;Vivamus porttitor porta tortor at ullamcorper. Proin vel nisi magna. Vivamus vel velit laoreet, malesuada nunc nec, pulvinar velit. Vivamus sollicitudin ex quam, sit amet aliquet velit euismod in. Etiam rutrum augue orci, sed euismod risus vehicula eu. Proin quis velit mattis, sodales erat vitae, condimentum nulla. Vestibulum vitae imperdiet ligula. Etiam venenatis ultrices varius.&lt;/p&gt;
+
+&lt;p&gt;Vestibulum vulputate nulla hendrerit velit tempor, et fringilla urna placerat. In hac habitasse platea dictumst. Vestibulum sit amet molestie tortor, eu posuere magna. Donec rhoncus pharetra urna sed tempor. Aliquam erat volutpat. Nulla facilisi. Nam at ante condimentum, egestas massa sed, auctor orci. Aenean tincidunt, turpis et venenatis finibus, orci urna tempor ex, at mattis nisi nisi varius nisl. Pellentesque diam libero, dignissim vel nisl ut, placerat pharetra felis.&lt;/p&gt;
+
+&lt;p&gt;Curabitur venenatis neque eget odio tempor, vitae condimentum quam aliquam. Duis dui odio, auctor non ultricies nec, mollis nec elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed eget elit at nisl auctor egestas. Vivamus nec turpis feugiat, dapibus metus et, fermentum lacus. Curabitur at blandit diam, non rutrum nulla. Quisque eget fermentum libero, in bibendum diam. Vestibulum eget porta est, in scelerisque metus. Donec in elit aliquet sapien ultrices tincidunt.&lt;/p&gt;
+</description>
+				<pubDate>Wed, 23 May 2012 07:25:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/jekyll-clean-dark/2012/05/Vivamus-porttitor-porta-tortor</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/jekyll-clean-dark/2012/05/Vivamus-porttitor-porta-tortor</guid>
+			</item>
+		
+	</channel>
+</rss>

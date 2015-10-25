@@ -1,28 +1,36 @@
-# Site settings
-title:JackRyannn’s Blog
-email:982767079@qq.com
-description:”it’s an amazing blog” # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "" # the base hostname & protocol for your site
+# Jekyll configuration
 
-# User setting
-owner:JackRyannn
-email:982767079@qq.com
-facebook_username:facebook
-twitter_username:twitter
-github_username:JackRyannn
-address:
-  - line:address
-  - line:address2
-  # Feel free to add more lines here 
-telephone:18888888888
-copyright:copyright
+name: JackRyannn 
+description: 现在是一只迷途的羔羊
 
-# API settings
-google_api_key:null
+# Url is currently only used only for the RSS feed in feed.xml
+url: http://jackryannn.github.io
+#url: http://localhost:4000
 
-# Build settings
-markdown: kramdown
+# For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
+baseurl: '/jekyll-clean-dark'
+
+social:
+  github: jackryannn
+
+# Google Analytics key, leave blank to ignore
+google_analytics_key:
+# Yandex metrika (https://metrica.yandex.com/) leave blanc to ignore or put true to use
+yandex_metrika:
+
+
+# Set this to your disqus shortname to enable comments. Note that the 'comments'
+# setting below must also be true. Individual posts can override 'comments' to
+# disable on a post-by-post basis
+disqus: streetturtle
+comments: true
+
+permalink: /:year/:month/:title
+paginate: 3
+
+highlighter: pygments
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+
+exclude: ['README.md', 'LICENSE']
