@@ -34,9 +34,9 @@
             <!--            <div class="box effect1"></div>-->
             <div id="toc" class="toc"></div>
           </div>
-          {{ content }}
+          {{ content }
+          {% include disqus-comments.html %}}
         </div>
-        {% include disqus-comments.html %}
         </div>
     </div>
     <div class="col-md-4 hidden-xs">
