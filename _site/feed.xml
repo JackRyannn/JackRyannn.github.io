@@ -74,9 +74,107 @@ TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候
 
 &lt;p&gt;HashTable相当于线程安全的HashMap，HashTable继承比较陈旧的Dictionary类，一般情况下HashMap比较优秀。还有一点不同就是HashMap的key和value都可以为null，而HashTable是不允许的。&lt;/p&gt;
 </description>
+				<pubDate>Wed, 28 Oct 2015 08:31:00 +0800</pubDate>
+				<link>http://jackryannn.github.io/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02</guid>
+			</item>
+		
+			<item>
+				<title>Java集合的学习</title>
+				<description>&lt;p&gt;我在读一本叫做《java核心技术》的一本书，很厚很全，适合当一本参考书。&lt;/p&gt;
+
+&lt;p&gt;今天看了第13章java集合，重新整理了一下思路，也有很多新的收获。&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;好了正文开始，第一次看到集合，我脑子里反映的还是{a,b,c}这个东西，这是数学里常说的集合。其实在java里，集合是指能够容纳数据的一种结构，它的分类有很多。&lt;/p&gt;
+
+&lt;p&gt;如下图所示：
+  &lt;img src=&quot;http://p.blog.csdn.net/images/p_blog_csdn_net/EvanLiu/map.bmp&quot; alt=&quot;集合&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;集合都会继承Collection这个接口，这个接口会提供一些比较基本的方法比如add(),remove(),size()这类。&lt;/p&gt;
+
+&lt;p&gt;我先列一个目录，这些是我这次看的内容：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Queue ArrayQueue &lt;/li&gt;
+&lt;li&gt;Deque ArrayDeque&lt;/li&gt;
+&lt;li&gt;List LinkedList ArrayList&lt;/li&gt;
+&lt;li&gt;Set HashSet TreeSet&lt;/li&gt;
+&lt;li&gt;Map HashMap TreeMap&lt;/li&gt;
+&lt;li&gt;Stack Vector Hashtable&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;queue-arrayqueue&quot;&gt;Queue ArrayQueue&lt;/h4&gt;
+
+&lt;p&gt;这是最常见的&lt;strong&gt;队列&lt;/strong&gt;，遵循先进先出的原则，前一个线程安全，后一个线程不安全。&lt;/p&gt;
+
+&lt;h4 id=&quot;deque-arraydeque&quot;&gt;Deque ArrayDeque&lt;/h4&gt;
+
+&lt;p&gt;这两个是&lt;strong&gt;双向队列&lt;/strong&gt;，两头都可以进行进出的操作，前一个线程安全，后一个线程不安全。&lt;/p&gt;
+
+&lt;h4 id=&quot;list-linkedlist-arraylist&quot;&gt;List LinkedList ArrayList&lt;/h4&gt;
+
+&lt;p&gt;List是列表接口，这两个都继承这个接口.&lt;/p&gt;
+
+&lt;p&gt;第一个是&lt;strong&gt;链表&lt;/strong&gt;结构，而且是双链表，每个元素都包含着数据和前后两个元素的地址，这种数据结构使得添加删除操作很快，但是查找较慢，因为每次查找都要从第一个元素重新开始找。&lt;/p&gt;
+
+&lt;p&gt;第二个是&lt;strong&gt;数组&lt;/strong&gt;结构，而且是动态数组，不像array[]必须设置一个长度
+（具体是如何操作的以后研究吧！），这样的结构查找比较快，但是插入删除这类操作会使整个数据都要进行位置的变化，所以不适合进行插入删除。&lt;/p&gt;
+
+&lt;h4 id=&quot;set-hashset-treeset&quot;&gt;Set HashSet TreeSet&lt;/h4&gt;
+
+&lt;p&gt;Set接口的主要特点就是元素是不能够重复的。 &lt;/p&gt;
+
+&lt;p&gt;HashSet是线程不安全的，对应的是HashTable，这个线程安全。Hash也称作散列，散列的好处就是可以快速查询某个元素，具体为何会快原来我一直都是一知半解，直到遇到这个网站&lt;a href=&quot;http://zh.visualgo.net/&quot;&gt;VisuAlgo&lt;/a&gt; ，可以自己感受一下。
+TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候下一个元素都不确定，TreeSet就解决了这个问题，它通过红黑树，每次添加元素都会调整这棵树，（会记录这个插入顺序？？？怎么搞的~和优先散列表的区别）&lt;/p&gt;
+
+&lt;h4 id=&quot;map-hashmap-treemap&quot;&gt;Map HashMap TreeMap&lt;/h4&gt;
+
+&lt;p&gt;Map是键值对应数据结构的接口&lt;/p&gt;
+
+&lt;p&gt;HashMap是我们比较常用的一种数据类型，键值对应的数据结构，也可以通过Hash来快速查找。&lt;/p&gt;
+
+&lt;p&gt;TreeMap和TreeSet类似，在HashMap的基础上增加了树，可以记录添加顺序。&lt;/p&gt;
+
+&lt;h4 id=&quot;stack-vector-hashtable&quot;&gt;Stack Vector Hashtable&lt;/h4&gt;
+
+&lt;p&gt;剩下这三个其实是Java早期时用的数据结构，他们都是线程安全的&lt;/p&gt;
+
+&lt;p&gt;Stack就是我们常说的栈结构，先进后出。&lt;/p&gt;
+
+&lt;p&gt;Vector是线程安全的可增长数组，和ArrayList类似，在多线程情况下可以用这个。&lt;/p&gt;
+
+&lt;p&gt;HashTable相当于线程安全的HashMap，HashTable继承比较陈旧的Dictionary类，一般情况下HashMap比较优秀。还有一点不同就是HashMap的key和value都可以为null，而HashTable是不允许的。&lt;/p&gt;
+</description>
 				<pubDate>Tue, 27 Oct 2015 08:31:00 +0800</pubDate>
 				<link>http://jackryannn.github.io/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01</link>
 				<guid isPermaLink="true">http://jackryannn.github.io/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01</guid>
+			</item>
+		
+			<item>
+				<title>修饰符的比较</title>
+				<description>&lt;p&gt;既然第一次写博客，就写一些简单的&lt;/p&gt;
+
+&lt;p&gt;public protected private 和 default&lt;/p&gt;
+
+&lt;p&gt;default 是不用加任何修饰符就是用default修饰的了&lt;/p&gt;
+
+&lt;p&gt;public 可以在 本包、外包、类内部、子类里调用，范围最广&lt;/p&gt;
+
+&lt;p&gt;protected 不能在外包非子类调用&lt;/p&gt;
+
+&lt;p&gt;default 连外包的子类也不能调用了，但是在包内部的子类是可以调用的（注意项目依赖的包经我测试貌似也算在包内部）&lt;/p&gt;
+
+&lt;p&gt;private 就只能在类内部调用了&lt;/p&gt;
+
+&lt;p&gt;所以这几种对函数和成员的限制是 private&amp;gt;default&amp;gt;protected&amp;gt;public&lt;/p&gt;
+
+&lt;p&gt;昨天爱奇艺的面试题问到这个，结果讲的没有条理，其实就是没有弄清楚的。&lt;/p&gt;
+</description>
+				<pubDate>Mon, 26 Oct 2015 15:12:06 +0800</pubDate>
+				<link>http://jackryannn.github.io/2015/10/%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83</link>
+				<guid isPermaLink="true">http://jackryannn.github.io/2015/10/%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83</guid>
 			</item>
 		
 			<item>
@@ -102,31 +200,6 @@ TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候
 				<pubDate>Mon, 26 Oct 2015 08:32:00 +0800</pubDate>
 				<link>http://jackryannn.github.io/2015/10/%E8%88%B9%E9%95%BF%E6%97%A5%E8%AE%B0</link>
 				<guid isPermaLink="true">http://jackryannn.github.io/2015/10/%E8%88%B9%E9%95%BF%E6%97%A5%E8%AE%B0</guid>
-			</item>
-		
-			<item>
-				<title>修饰符的比较</title>
-				<description>&lt;p&gt;既然第一次写博客，就写一些简单的&lt;/p&gt;
-
-&lt;p&gt;public protected private 和 default&lt;/p&gt;
-
-&lt;p&gt;default 是不用加任何修饰符就是用default修饰的了&lt;/p&gt;
-
-&lt;p&gt;public 可以在 本包、外包、类内部、子类里调用，范围最广&lt;/p&gt;
-
-&lt;p&gt;protected 不能在外包非子类调用&lt;/p&gt;
-
-&lt;p&gt;default 连外包的子类也不能调用了，但是在包内部的子类是可以调用的（注意项目依赖的包经我测试貌似也算在包内部）&lt;/p&gt;
-
-&lt;p&gt;private 就只能在类内部调用了&lt;/p&gt;
-
-&lt;p&gt;所以这几种对函数和成员的限制是 private&amp;gt;default&amp;gt;protected&amp;gt;public&lt;/p&gt;
-
-&lt;p&gt;昨天爱奇艺的面试题问到这个，结果讲的没有条理，其实就是没有弄清楚的。&lt;/p&gt;
-</description>
-				<pubDate>Mon, 26 Oct 2015 00:00:00 +0800</pubDate>
-				<link>http://jackryannn.github.io/2015/10/%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83</link>
-				<guid isPermaLink="true">http://jackryannn.github.io/2015/10/%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83</guid>
 			</item>
 		
 	</channel>
