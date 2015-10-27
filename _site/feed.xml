@@ -80,7 +80,7 @@ TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候
 			</item>
 		
 			<item>
-				<title>修饰符の比较</title>
+				<title>修饰符的比较</title>
 				<description>&lt;p&gt;既然第一次写博客，就写一些简单的&lt;/p&gt;
 
 &lt;p&gt;public protected private 和 default&lt;/p&gt;
