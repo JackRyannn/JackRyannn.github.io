@@ -139,32 +139,21 @@ TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候
 
 <h4 id="map-hashmap-treemap">Map HashMap TreeMap</h4>
 
-<p>Map是键值对应数据结构的接口，HashMap</p>
+<p>Map是键值对应数据结构的接口</p>
 
-<div id="disqus_thread"></div>
+<p>HashMap是我们比较常用的一种数据类型，键值对应的数据结构，也可以通过Hash来快速查找。</p>
 
-<script>
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() {  // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<p>TreeMap和TreeSet类似，在HashMap的基础上增加了树，可以记录添加顺序。</p>
 
-s.src = '//jackryannnblog.disqus.com/embed.js';
+<h4 id="stack-vector-hashtable">Stack Vector Hashtable</h4>
 
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
+<p>剩下这三个其实是Java早期时用的数据结构，他们都是线程安全的</p>
 
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<p>Stack就是我们常说的栈结构，先进后出。</p>
+
+<p>Vector是线程安全的可增长数组，和ArrayList类似，在多线程情况下可以用这个。</p>
+
+<p>HashTable相当于线程安全的HashMap，HashTable继承比较陈旧的Dictionary类，一般情况下HashMap比较优秀。还有一点不同就是HashMap的key和value都可以为null，而HashTable是不允许的。</p>
 
         </div>
         
