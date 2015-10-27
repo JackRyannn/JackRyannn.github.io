@@ -70,22 +70,18 @@
       <div class="article">
         <div class="well">
 
-          <h1><a href="http://jackryannn.github.io">我的第一篇博客</a></h1>
+          <h1><a href="http://jackryannn.github.io">Java集合的学习</a></h1>
 
           <div class="post-meta">
             <div class="post-time">
               <i class="fa fa-calendar"></i>
-              <time>26 Oct 2015</time>
+              <time>27 Oct 2015</time>
             </div>
             <ul>
               
-              <li><a href="http://jackryannn.github.io/tag/bootstrap">bootstrap</a></li>
+              <li><a href="http://jackryannn.github.io/tag/技术">技术</a></li>
               
-              <li><a href="http://jackryannn.github.io/tag/javascript">javascript</a></li>
-              
-              <li><a href="http://jackryannn.github.io/tag/php">php</a></li>
-              
-              <li><a href="http://jackryannn.github.io/tag/AngularJS">AngularJS</a></li>
+              <li><a href="http://jackryannn.github.io/tag/Java">Java</a></li>
               
             </ul>
           </div>
@@ -95,7 +91,82 @@
             <!--            <div class="box effect1"></div>-->
             <div id="toc" class="toc"></div>
           </div>
-          <p>这是我第一篇博客，记录一下。</p>
+          <p>我在读一本叫做《java核心技术》的一本书，很厚很全，适合当一本参考书。</p>
+
+<p>今天看了第13章java集合，重新整理了一下思路，也有很多新的收获。</p>
+
+<hr>
+
+<p>好了正文开始，第一次看到集合，我脑子里反映的还是{a,b,c}这个东西，这是数学里常说的集合。其实在java里，集合是指能够容纳数据的一种结构，它的分类有很多。</p>
+
+<p>如下图所示：
+  <img src="http://p.blog.csdn.net/images/p_blog_csdn_net/EvanLiu/map.bmp" alt="集合"></p>
+
+<p>集合都会继承Collection这个接口，这个接口会提供一些比较基本的方法比如add(),remove(),size()这类。</p>
+
+<p>我先列一个目录，这些是我这次看的内容：</p>
+
+<ol>
+<li>Queue ArrayQueue </li>
+<li>Deque ArrayDeque</li>
+<li>List LinkedList ArrayList</li>
+<li>Set HashSet TreeSet</li>
+<li>Map HashMap TreeMap</li>
+<li>Stack Vector Hashtable</li>
+</ol>
+
+<h4 id="queue-arrayqueue">Queue ArrayQueue</h4>
+
+<p>这是最常见的<strong>队列</strong>，遵循先进先出的原则，前一个线程安全，后一个线程不安全。</p>
+
+<h4 id="deque-arraydeque">Deque ArrayDeque</h4>
+
+<p>这两个是<strong>双向队列</strong>，两头都可以进行进出的操作，前一个线程安全，后一个线程不安全。</p>
+
+<h4 id="list-linkedlist-arraylist">List LinkedList ArrayList</h4>
+
+<p>List是列表接口，这两个都继承这个接口.</p>
+
+<p>第一个是<strong>链表</strong>结构，而且是双链表，每个元素都包含着数据和前后两个元素的地址，这种数据结构使得添加删除操作很快，但是查找较慢，因为每次查找都要从第一个元素重新开始找。</p>
+
+<p>第二个是<strong>数组</strong>结构，而且是动态数组，不像array[]必须设置一个长度
+（具体是如何操作的以后研究吧！），这样的结构查找比较快，但是插入删除这类操作会使整个数据都要进行位置的变化，所以不适合进行插入删除。</p>
+
+<h4 id="set-hashset-treeset">Set HashSet TreeSet</h4>
+
+<p>Set接口的主要特点就是元素是不能够重复的。 </p>
+
+<p>HashSet是线程不安全的，对应的是HashTable，这个线程安全。Hash也称作散列，散列的好处就是可以快速查询某个元素，具体为何会快原来我一直都是一知半解，直到遇到这个网站<a href="http://zh.visualgo.net/">VisuAlgo</a> ，可以自己感受一下。
+TreeSet是HashSet的升级版，散列表是无序列表，每次查询的时候下一个元素都不确定，TreeSet就解决了这个问题，它通过红黑树，每次添加元素都会调整这棵树，（会记录这个插入顺序？？？怎么搞的~和优先散列表的区别）</p>
+
+<h4 id="map-hashmap-treemap">Map HashMap TreeMap</h4>
+
+<p>Map是键值对应数据结构的接口，HashMap</p>
+
+<div id="disqus_thread"></div>
+
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() {  // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//jackryannnblog.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
         </div>
         
@@ -112,9 +183,11 @@
   <h1>Recent Posts</h1>
   <ul>
     
-    <li><a href="/2015/10/%E8%88%B9%E9%95%BF%E6%97%A5%E8%AE%B0">杰克船长日记</a></li>
+    <li><a href="/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01">Java集合的学习</a></li>
     
-    <li><a href="/2015/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2">我的第一篇博客</a></li>
+    <li><a href="/2015/10/%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83">修饰符的比较</a></li>
+    
+    <li><a href="/2015/10/%E8%88%B9%E9%95%BF%E6%97%A5%E8%AE%B0">杰克船长日记</a></li>
     
   </ul>
 </div>
@@ -123,15 +196,11 @@
   <h1>Tags</h1>
   <ul>
     
-      <li><a href="/tag/bootstrap">bootstrap</a></li>
-    
-      <li><a href="/tag/javascript">javascript</a></li>
-    
-      <li><a href="/tag/php">php</a></li>
-    
-      <li><a href="/tag/AngularJS">AngularJS</a></li>
-    
       <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/技术">技术</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
     
   </ul>
 </div>
@@ -146,7 +215,7 @@
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
   var disqus_shortname = ; // required: replace example with your forum shortname
-  var disqus_identifier = "/2015/10/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2";
+  var disqus_identifier = "/2015/10/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01";
 
   /* * * DON'T EDIT BELOW THIS LINE * * */
   (function() {
@@ -160,14 +229,14 @@
 
 
 <footer class="footer-distributed">
-  <div class="container">
-
-    <div class="footer">
-      <p>Pavel Makhov &copy; 2015</p>
-      <h6>Follow me</h6>
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
 
 <ul class="social-media">
-
+    
     
     <li>
         <a title="jackryannn on Github"
@@ -175,22 +244,21 @@
             class="github wc-img-replace" target="_blank">Github</a>
     </li>
     
-
     
-
     
-
-
     
-
-
     
-
+    
+    
+    
+    
+    
+    
+    
 </ul>
-
+        </div>
     </div>
-  </div>
-
+    
 </footer>
 
 <!--
@@ -221,4 +289,3 @@
 </body>
 
 </html>
-
