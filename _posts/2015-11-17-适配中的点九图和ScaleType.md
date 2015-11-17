@@ -8,23 +8,25 @@ tags:
 - Andriod
 
 ---
-##点九图##  
+##点九图
 
 
 
 　　点九图是一种android特有的图像格式，他的后缀名为 **.9.png**。
+
 　　它的好处是可以更智能的拉伸图片，而不是简单的横纵放大的拉伸，效果如下：
 　　
-　　![image](http://a.hiphotos.baidu.com/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=e1b85129c9177f3e0439f45f11a650a2/7af40ad162d9f2d3675ce770a9ec8a136227cce4.jpg)
+　　![image](https://ooo.0o0.ooo/2015/11/17/564ac3ddf0052.jpg)
 　　
 
 　　我们可以通过点九图来指定一个图片的拉伸区域和非拉伸区域，在Java的sdk的tool里有用来制作点九图的工具，我们可以在终端里打开:/Users/pro/Development/adt-bundle-mac-x86_64-20131030/sdk/tools里的draw9patch
 　　
-　　![image](./images/draw9patch.png)　
+　　![image](https://ooo.0o0.ooo/2015/11/17/564ac306a5fa1.png)　
 　　
 　　
 　　然后拖动你要处理的图片到这里,就可以进行处理了。
-　　![image](./images/draw9patch2.png)　
+　　![image](https://ooo.0o0.ooo/2015/11/17/564ac309764f0.png)
+
 　　
 
 　　点九图其实就是在原图的基础上，在四边各添加一个像素的边界，它是透明的，可以在这个边界上画黑色的点，四个边上点的含义是不同的。
@@ -41,18 +43,19 @@ tags:
 
 他的使用效果（横纵向）
 
-![image](./images/draw9patch3.png)
+![image](https://ooo.0o0.ooo/2015/11/17/564ac30775abd.png)　
 
-![image](./images/draw9patch3.png)
+![image](https://ooo.0o0.ooo/2015/11/17/564ac30f96279.png)
+
 
 可以看到这个图片会自动进行缩放，而且保留细节。
 
-##ScaleType##  
+##ScaleType  
 
 
-效果图：(和下面介绍顺序一致，第一行从左到右，然后第二行)  
+效果图：(和下面介绍顺序一致，第一行从左到右，然后第二行)
 
-![image](./images/scaletype.png)
+![image](https://ooo.0o0.ooo/2015/11/17/564ac308aa7b2.png)  
 
 
 
