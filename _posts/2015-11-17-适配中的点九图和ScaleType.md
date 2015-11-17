@@ -21,8 +21,8 @@ tags:
 
 　　我们可以通过点九图来指定一个图片的拉伸区域和非拉伸区域，在Java的sdk的tool里有用来制作点九图的工具，我们可以在终端里打开:/Users/pro/Development/adt-bundle-mac-x86_64-20131030/sdk/tools里的draw9patch
 　　
-　　![image](https://ooo.0o0.ooo/2015/11/17/564ac306a5fa1.png)　
-　　
+  
+　　![image](https://ooo.0o0.ooo/2015/11/17/564ac306a5fa1.png)　　　
 　　
 　　然后拖动你要处理的图片到这里,就可以进行处理了。
 　　![image](https://ooo.0o0.ooo/2015/11/17/564ac309764f0.png)
