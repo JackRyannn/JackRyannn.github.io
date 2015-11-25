@@ -5,10 +5,9 @@ date: 2015-11-25 10:55:00 -0700
 layout: post
 title:Android系统中百度OCR的使用说明
 tags:
-- Andriod
+- Android
 
----    
-
+---
 ##百度OCR
 　　百度OCR是百度今年六月份公布的，分企业版和个人版，用法都差不多。大家可以先看一下他的官方网页介绍  [百度OCR文字识别个人版](http://apistore.baidu.com/apiworks/servicedetail/146.html)。  
 　　他是通过post方法来调用api的，主要有四部分参数：  
