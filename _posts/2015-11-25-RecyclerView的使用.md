@@ -71,4 +71,5 @@ RecyclerView是2015年谷歌大会上发布的，介绍里第一句是这样说�
 	        }
 	    }
 	}
-
+    
+这样感觉，虽然它比listView多了一个LayoutManager，但是它的adapter没有重写BaseAdapter那么麻烦，而且高度解耦，简洁明了。

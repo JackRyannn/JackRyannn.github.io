@@ -3,7 +3,7 @@ author: JackRyannn
 comments: true
 date: 2015-11-25 10:55:00 -0700
 layout: post
-title:Android系统中百度OCR的使用说明
+title:Android系统使用百度OCR
 tags:
 - Android
 
