@@ -8,7 +8,7 @@ tags:
 - Android
 
 ---
-  
+
 RecyclerView是2015年谷歌大会上发布的，介绍里第一句是这样说的：` A flexible view for providing a limited window into a large data set.`在有限的窗口内展现大量数据的灵活的视图。用它可以代替listview和gridview，更重要的是它是高度的解耦，在使用的时候就能够体会到了。  
   
 简单写的例子，在注释中有对它的解释和思考。  
