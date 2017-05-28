@@ -32,7 +32,15 @@ paginate: 3
 
 highlighter: rouge
 markdown: kramdown
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+kramdown:
+  input: GFM
+  extensions:
+    - autolink
+    - footnotes
+    - smart
+  use_coderay: true
+  syntax_highlighter: rouge
+  coderay:
+    coderay_line_numbers:  nil
 
 exclude: ['README.md', 'LICENSE']
