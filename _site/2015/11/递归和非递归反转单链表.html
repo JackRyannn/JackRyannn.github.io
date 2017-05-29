@@ -1,0 +1,310 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">递归和非递归反转单链表</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>06 Nov 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Java">Java</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <p>每个人都知道该如何反转单链表，就是把next指向前一个node就可以了，但是实际写的时候却有很多问题，是不够熟练？还是没有深入了解？</p>
+
+<p>这里写了两种方法反转单链表，第一种reverse()是非递归（循环）的方法来反转。</p>
+
+<p>非递归方法：</p>
+
+<p>理解：首先传入的参数是起始点，也可以说是head，① 传入之后要把每一个next的值改为它前面的node，但是这并不是简单地node.next = node.previous，因为我们 ② 既没有node.previous，③ 也没有考虑边界值，比如第一个点反转后的next应该为null，我们要解决的就是这三个问题和循环的边界条件。</p>
+
+<p>但是第①个问题，我们修改了next的值，就不能通过next来跳转到下一个节点了，所以我们需要新建一个变量nextNode来保存next的值。</p>
+
+<p>为了让next指向上一个节点，就要保存上一个节点，用previousNode，我们让previousNode 的初始值为null，那么第一次赋值时，第一点的next就是null了。</p>
+
+<p>每次循环都会向下跳一次节点，最后一次会跳到null上，所以不要返回current，而是反悔previousNode。</p>
+
+<hr />
+
+<p>递归方法：</p>
+
+<p>循环是每次跳到下一个节点，直到该点为null时停止，递归就是处理这个节点后，把下一个节点作为参数再传进这个方法。</p>
+
+<p>不过在递归方法中，我们只保存了nextNode而没有保存previousNode，因为递归方法有一个不同于循环的性质。一个链表，在方法里又递归调用了这个方法，则程序会先进入这个方法，直到递归到最后终止，然而再执行递归方法下面的代码，这样其实相当于一个链表走了一来一回，所以在链表回来的时候才对next进行了赋值。</p>
+
+<p>以下是类和方法。</p>
+
+<p>Node类</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">		<span class="kp">public</span> <span class="k">class</span> <span class="nc">Node</span> <span class="p">{</span>
+	   	 <span class="n">int</span> <span class="n">value</span><span class="p">;</span>
+	   	 <span class="no">Node</span> <span class="k">next</span><span class="p">;</span>
+	     <span class="kp">public</span> <span class="no">Node</span><span class="p">(</span><span class="n">int</span> <span class="n">value</span><span class="p">){</span>
+	        <span class="n">this</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+	     <span class="p">}</span>
+		<span class="p">}</span>
+	</code></pre></figure>
+
+<hr />
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="kp">public</span> <span class="k">class</span> <span class="nc">Main</span> <span class="p">{</span>
+    <span class="kp">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="no">String</span><span class="p">[]</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="no">Node</span> <span class="n">node1</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="no">Node</span> <span class="n">node2</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="no">Node</span> <span class="n">node3</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+        <span class="no">Node</span> <span class="n">node4</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Node</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+        <span class="n">node1</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">node2</span><span class="p">;</span>
+        <span class="n">node2</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">node3</span><span class="p">;</span>
+        <span class="n">node3</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">node4</span><span class="p">;</span>
+        <span class="n">node4</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="no">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">node1</span><span class="p">;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">recursionReverse</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">node</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">value</span><span class="p">);</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="p">.</span><span class="nf">next</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">static</span> <span class="kp">public</span> <span class="no">Node</span> <span class="n">reverse</span><span class="p">(</span><span class="no">Node</span> <span class="n">current</span><span class="p">)</span> <span class="p">{</span>
+        <span class="no">Node</span> <span class="n">previousNode</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="no">Node</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">nextNode</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nf">next</span><span class="p">;</span>
+            <span class="n">current</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">previousNode</span><span class="p">;</span>
+            <span class="n">previousNode</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">nextNode</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">previousNode</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">static</span> <span class="kp">public</span> <span class="no">Node</span> <span class="n">recursionReverse</span><span class="p">(</span><span class="no">Node</span> <span class="n">current</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="p">.</span><span class="nf">next</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="no">Node</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nf">next</span><span class="p">;</span>
+            <span class="n">current</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+            <span class="no">Node</span> <span class="n">retNode</span> <span class="o">=</span> <span class="n">recursionReverse</span><span class="p">(</span><span class="n">nextNode</span><span class="p">);</span>
+            <span class="n">nextNode</span><span class="p">.</span><span class="nf">next</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">retNode</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">}</span>
+	</code></pre></figure>
+
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

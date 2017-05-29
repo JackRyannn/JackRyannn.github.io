@@ -1,0 +1,551 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">CCF试题－权限查询</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>17 Mar 2017</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <p>问题描述</p>
+
+<p>授权 (authorization) 是各类业务系统不可缺少的组成部分，系统用户通过授权机制获得系统中各个模块的操作权限。</p>
+
+<p>本题中的授权机制是这样设计的：每位用户具有若干角色，每种角色具有若干权限。</p>
+
+<p>例如，用户 david 具有 manager 角色，manager 角色有 crm:2 权限，则用户 david 具有 crm:2 权限，也就是 crm 类权限的第 2 等级的权限。</p>
+
+<p>具体地，用户名和角色名称都是由小写字母组成的字符串，长度不超过 32。权限分为分等级权限和不分等级权限两大类。分等级权限由权限类名和权限等级构成，中间用冒号“:”分隔。其中权限类名也是由小写字母组成的字符串，长度不超过 32。权限等级是一位数字，从 0 到 9，数字越大表示权限等级越高。系统规定如果用户具有某类某一等级的权限，那么他也将自动具有该类更低等级的权限。例如在上面的例子中，除 crm:2 外，用户 david 也具有 crm:1 和 crm:0 权限。不分等级权限在描述权限时只有权限类名，没有权限等级（也没有用于分隔的冒号）。</p>
+
+<p>给出系统中用户、角色和权限的描述信息，你的程序需要回答多个关于用户和权限的查询。查询可分为以下几类：</p>
+
+<p>不分等级权限的查询：如果权限本身是不分等级的，则查询时不指定等级，返回是否具有该权限；</p>
+
+<p>分等级权限的带等级查询：如果权限本身分等级，查询也带等级，则返回是否具有该类的该等级权限；</p>
+
+<p>分等级权限的不带等级查询：如果权限本身分等级，查询不带等级，则返回具有该类权限的等级；如果不具有该类的任何等级权限，则返回“否”。</p>
+
+<p>输入格式</p>
+
+<p>输入第一行是一个正整数 p，表示不同的权限类别的数量。紧接着的 p 行被称为 P 段，每行一个字符串，描述各个权限。对于分等级权限，格式为 category level，其中 category 是权限类名，level 是该类权限的最高等级。对于不分等级权限，字符串只包含权限类名。</p>
+
+<p>接下来一行是一个正整数 r，表示不同的角色数量。紧接着的 r 行被称为 R 段，每行描述一种角色，格式为</p>
+
+<p>role s privilege 1 privilege 2 … privilege s</p>
+
+<p>其中 role 是角色名称，s 表示该角色具有多少种权限。后面 s 个字符串描述该角色具有的权限，格式同 P 段。</p>
+
+<p>接下来一行是一个正整数 u，表示用户数量。紧接着的 u 行被称为 U 段，每行描述一个用户，格式为</p>
+
+<p>user t role 1 role 2 … role t</p>
+
+<p>其中 user 是用户名，t 表示该用户具有多少种角色。后面 t 个字符串描述该用户具有的角色。</p>
+
+<p>接下来一行是一个正整数 q，表示权限查询的数量。紧接着的 q 行被称为 Q 段，每行描述一个授权查询，格式为 user privilege，表示查询用户 user 是否具有 privilege 权限。如果查询的权限是分等级权限，则查询中的 privilege 可指定等级，表示查询该用户是否具有该等级的权限；也可以不指定等级，表示查询该用户具有该权限的等级。对于不分等级权限，只能查询该用户是否具有该权限，查询中不能指定等级。</p>
+
+<p>输出格式</p>
+
+<p>输出共 q 行，每行为 false、true，或者一个数字。false 表示相应的用户不具有相应的权限，true 表示相应的用户具有相应的权限。对于分等级权限的不带等级查询，如果具有权限，则结果是一个数字，表示该用户具有该权限的（最高）等级。如果用户不存在，或者查询的权限没有定义，则应该返回 false。</p>
+
+<p>样例输入</p>
+
+<blockquote>
+  <p>3</p>
+</blockquote>
+
+<blockquote>
+  <p>crm:2</p>
+</blockquote>
+
+<blockquote>
+  <p>git:3</p>
+</blockquote>
+
+<blockquote>
+  <p>game</p>
+</blockquote>
+
+<blockquote>
+  <p>4</p>
+</blockquote>
+
+<blockquote>
+  <p>hr 1 crm:2</p>
+</blockquote>
+
+<blockquote>
+  <p>it 3 crm:1 git:1 game</p>
+</blockquote>
+
+<blockquote>
+  <p>dev 2 git:3 game</p>
+</blockquote>
+
+<blockquote>
+  <p>qa 1 git:2</p>
+</blockquote>
+
+<blockquote>
+  <p>3</p>
+</blockquote>
+
+<blockquote>
+  <p>alice 1 hr</p>
+</blockquote>
+
+<blockquote>
+  <p>bob 2 it qa</p>
+</blockquote>
+
+<blockquote>
+  <p>charlie 1 dev</p>
+</blockquote>
+
+<blockquote>
+  <p>9</p>
+</blockquote>
+
+<blockquote>
+  <p>alice game</p>
+</blockquote>
+
+<blockquote>
+  <p>alice crm:2</p>
+</blockquote>
+
+<blockquote>
+  <p>alice git:0</p>
+</blockquote>
+
+<blockquote>
+  <p>bob git</p>
+</blockquote>
+
+<blockquote>
+  <p>bob poweroff</p>
+</blockquote>
+
+<blockquote>
+  <p>charlie game</p>
+</blockquote>
+
+<blockquote>
+  <p>charlie crm</p>
+</blockquote>
+
+<blockquote>
+  <p>charlie git:3</p>
+</blockquote>
+
+<blockquote>
+  <p>malice game</p>
+</blockquote>
+
+<p>样例输出</p>
+
+<blockquote>
+  <p>false</p>
+</blockquote>
+
+<blockquote>
+  <p>true</p>
+</blockquote>
+
+<blockquote>
+  <p>false</p>
+</blockquote>
+
+<blockquote>
+  <p>2</p>
+</blockquote>
+
+<blockquote>
+  <p>false</p>
+</blockquote>
+
+<blockquote>
+  <p>true</p>
+</blockquote>
+
+<blockquote>
+  <p>false</p>
+</blockquote>
+
+<blockquote>
+  <p>true</p>
+</blockquote>
+
+<blockquote>
+  <p>false</p>
+</blockquote>
+
+<p>样例说明</p>
+
+<p>　　 样例输入描述的场景中，各个用户实际的权限如下：</p>
+
+<p>　　 用户 alice 具有 crm:2 权限</p>
+
+<p>　　 用户 bob 具有 crm:1、git:2 和 game 权限</p>
+
+<p>　　 用户 charlie 具有 git:3 和 game 权限</p>
+
+<p>　　 用户 malice 未描述，因此不具有任何权限</p>
+
+<p>评测用例规模与约定
+　　
+评测用例规模：</p>
+
+<p>1 ≤ p, r, u ≤ 100</p>
+
+<p>1 ≤ q ≤ 10 000</p>
+
+<p>每个用户具有的角色数不超过 10，每种角色具有的权限种类不超过 10</p>
+
+<p>约定：</p>
+
+<p>输入保证合法性，包括：</p>
+
+<p>1) 角色对应的权限列表（R 段）中的权限都是之前（P 段）出现过的，权限可以重复出现，如果带等级的权限重复出现，以等级最高的为准</p>
+
+<p>2) 用户对应的角色列表（U 段）中的角色都是之前（R 段）出现过的，如果多个角色都具有某一分等级权限，以等级最高的为准</p>
+
+<p>3) 查询（Q 段）中的用户名和权限类名不保证在之前（U 段和 P 段）出现过</p>
+
+<p>前 20% 的评测用例只有一种角色</p>
+
+<p>前 50% 的评测用例权限都是不分等级的，查询也都不带等级</p>
+
+<h1 id="java正确答案-测试有效">Java正确答案 测试有效</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">Scanner</span><span class="p">;</span>
+    
+    <span class="kp">public</span> <span class="k">class</span> <span class="nc">Main</span> <span class="p">{</span>
+        <span class="kp">public</span> <span class="n">static</span> <span class="k">class</span> <span class="nc">Privilege</span> <span class="p">{</span>
+            <span class="no">String</span> <span class="nb">name</span> <span class="o">=</span> <span class="s2">"null"</span><span class="p">;</span>
+            <span class="n">int</span> <span class="n">level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    
+        <span class="kp">public</span> <span class="n">static</span> <span class="k">class</span> <span class="nc">Role</span> <span class="p">{</span>
+            <span class="no">String</span> <span class="nb">name</span> <span class="o">=</span> <span class="s2">"null"</span><span class="p">;</span>
+            <span class="no">Privilege</span><span class="p">[]</span> <span class="n">privileges</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kp">public</span> <span class="n">static</span> <span class="k">class</span> <span class="nc">User</span><span class="p">{</span>
+            <span class="no">String</span> <span class="nb">name</span> <span class="o">=</span> <span class="s2">"null"</span><span class="p">;</span>
+            <span class="no">Role</span><span class="p">[]</span> <span class="n">roles</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kp">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="no">String</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="no">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Scanner</span><span class="p">(</span><span class="no">System</span><span class="p">.</span><span class="nf">in</span><span class="p">);</span>
+            <span class="n">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>
+            <span class="no">Privilege</span><span class="p">[]</span> <span class="no">Privileges</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Privilege</span><span class="p">[</span><span class="n">i1</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">i1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="no">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+                <span class="no">Privileges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Privilege</span><span class="p">();</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">":"</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="no">Privileges</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+                    <span class="no">Privileges</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">level</span> <span class="o">=</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">parseInt</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]);</span>
+                <span class="p">}</span> <span class="k">else</span>
+                    <span class="no">Privileges</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+            <span class="p">}</span>
+    
+            <span class="n">int</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>
+            <span class="no">Role</span><span class="p">[]</span> <span class="n">roles</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Role</span><span class="p">[</span><span class="n">i2</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">i2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Role</span><span class="p">();</span>
+                <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>   <span class="sr">//</span><span class="n">try</span> <span class="n">nextLine</span>
+                <span class="n">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>  <span class="sr">//</span><span class="err">每个角色拥有的权限数</span>
+                <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">privileges</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Privilege</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">privileges</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Privilege</span><span class="p">();</span>
+                    <span class="no">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">":"</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">privileges</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="nf">level</span> <span class="o">=</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">parseInt</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]);</span>
+                        <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">privileges</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+                    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                        <span class="n">roles</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">privileges</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+    
+            <span class="p">}</span>
+            <span class="n">int</span> <span class="n">i3</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>
+            <span class="no">User</span><span class="p">[]</span> <span class="n">users</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">User</span><span class="p">[</span><span class="n">i3</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">i3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">users</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">User</span><span class="p">();</span>
+                <span class="n">users</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+                <span class="n">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>
+                <span class="n">users</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">roles</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Role</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">users</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">roles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Role</span><span class="p">();</span>
+                    <span class="n">users</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">roles</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="nf">name</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">int</span> <span class="n">i4</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">nextInt</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">i4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">int</span> <span class="n">level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+                <span class="no">String</span> <span class="n">s_name</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+                <span class="no">String</span> <span class="n">s_privilege</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">next</span><span class="p">();</span>
+    <span class="sr">//</span>            <span class="err">遍历</span><span class="no">User</span>
+                <span class="k">for</span><span class="p">(</span><span class="no">User</span> <span class="n">u</span> <span class="p">:</span> <span class="n">users</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span><span class="p">(</span><span class="n">u</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="n">s_name</span><span class="p">))</span>
+    <span class="sr">//</span>            <span class="err">遍历</span><span class="no">Role</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="no">Role</span> <span class="n">r</span> <span class="p">:</span> <span class="n">roles</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">for</span> <span class="p">(</span><span class="no">Role</span> <span class="n">u_r</span> <span class="p">:</span> <span class="n">u</span><span class="p">.</span><span class="nf">roles</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">u_r</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="nf">name</span><span class="p">)){</span>
+                                <span class="n">continue</span><span class="p">;</span>
+                            <span class="p">}</span>
+                            <span class="no">String</span> <span class="n">p_name</span> <span class="o">=</span> <span class="n">s_privilege</span><span class="p">;</span>
+                            <span class="n">int</span> <span class="n">p_level</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">s_privilege</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">":"</span><span class="p">))</span> <span class="p">{</span>
+                                <span class="n">p_name</span> <span class="o">=</span> <span class="n">s_privilege</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+                                <span class="n">p_level</span> <span class="o">=</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">parseInt</span><span class="p">(</span><span class="n">s_privilege</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]);</span>
+                            <span class="p">}</span>
+    <span class="sr">//</span>                    <span class="err">遍历</span><span class="no">Privilege</span>
+                            <span class="k">for</span> <span class="p">(</span><span class="no">Privilege</span> <span class="n">privilege</span> <span class="p">:</span> <span class="n">r</span><span class="p">.</span><span class="nf">privileges</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="n">privilege</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="n">p_name</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">privilege</span><span class="p">.</span><span class="nf">level</span> <span class="o">&gt;=</span> <span class="n">p_level</span><span class="p">)</span> <span class="p">{</span>
+                                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                                    <span class="k">if</span> <span class="p">(</span><span class="n">privilege</span><span class="p">.</span><span class="nf">level</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">p_level</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+                                        <span class="k">if</span><span class="p">(</span><span class="n">privilege</span><span class="p">.</span><span class="nf">level</span><span class="o">&gt;</span><span class="n">level</span><span class="p">)</span>
+                                        <span class="n">level</span> <span class="o">=</span> <span class="n">privilege</span><span class="p">.</span><span class="nf">level</span><span class="p">;</span>
+                                    <span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="n">switch</span> <span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="s2">"false"</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="s2">"true"</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+                <span class="p">}</span>
+    
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    </code></pre></figure>
+
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

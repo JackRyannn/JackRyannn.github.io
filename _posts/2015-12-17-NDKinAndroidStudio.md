@@ -13,8 +13,9 @@ tags:
   
 我已经配置好ndk相关文件了，在你的Project Structure里可以看到你的NDK路径。  
   
-首先创建一个module，在你的MainActivity里添加一个native方法，如下：    
-
+首先创建一个module，在你的MainActivity里添加一个native方法，如下：   
+ 
+	{% highlight ruby %}
 	package com.jackryannn.ndktest;
 	import android.support.v7.app.AppCompatActivity;
 	import android.os.Bundle;
@@ -29,6 +30,7 @@ tags:
         setContentView(R.layout.activity_main);
     }
 	}
+	{% endhighlight %}
   
 然后再Build-Make Project一下，好生成class文件  
 
@@ -50,18 +52,20 @@ tags:
 他的样子变成了`JNIEXPORT jstring JNICALL Java_com_jackryannn_ndktest_MainActivity_getStringFromC
   (JNIEnv *, jclass);
 `  
-然后我们在jni文件夹中建立一个`hello.c`文件，把include和函数都写上：  
+然后我们在jni文件夹中建立一个`hello.c`文件，把include和函数都写上:
   
-	#include <stdio.h>
-	#include "com_jackryannn_ndktest_MainActivity.h"
-
-	JNIEXPORT jstring JNICALL 	Java_com_jackryannn_ndktest_MainActivity_getStringFromC
-        (JNIEnv * env, jclass jclass){
-    return (*env)->NewStringUTF(env,"hello from ndk");
-	}
+	   {% highlight ruby %}
+		#include <stdio.h>
+		#include "com_jackryannn_ndktest_MainActivity.h"
+		JNIEXPORT jstring JNICALL 	Java_com_jackryannn_ndktest_MainActivity_getStringFromC
+	        (JNIEnv * env, jclass jclass){
+	    return (*env)->NewStringUTF(env,"hello from ndk");
+		}
+		{% endhighlight %}
   
 这时c文件也写好了，现在需要一个Android.mk文件来说明生成的so文件的名字是什么，用那个文件生成。我们可以从ndk的sample里面找一个Android.mk文件：  
 
+	{% highlight ruby %}
 	# Copyright (C) 2009 The Android Open Source Project
 	#
 	# Licensed under the Apache License, Version 2.0 (the "License");
@@ -84,6 +88,7 @@ tags:
 	LOCAL_SRC_FILES := hello.c
 	
 	include $(BUILD_SHARED_LIBRARY)
+	{% endhighlight %}
   
 最关键的就是LOCAL_MODULE    := hello 和 LOCAL_SRC_FILES := hello.c，他们分别是ndk-build后的library名称和通过hello.c文件进行生成（或者叫源文件）  
   

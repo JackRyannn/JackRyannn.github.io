@@ -1,0 +1,351 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">游戏中接入facebook</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>11 Mar 2016</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <h1 id="facebook接入">FaceBook接入</h1>
+<p>准备工作<br />
+—-</p>
+
+<p>1.首先从Android sdk Manager里下载安装extra里的 Google Play Billing Library<br />
+2.这时候在你的sdk目录下的/extras/google/play_billing/就会又个以.aidl结尾的文件。</p>
+<ol>
+  <li>在Tools &gt; Android &gt; SDK Manager中的Appearance &amp; Behavior &gt; System Settings &gt; Android SDK里选择sdk tools的选项卡，下载安装google play billing library，如图所示。</li>
+</ol>
+
+<p><img src="https://ooo.0o0.ooo/2016/03/09/56e0df7c4a6dc.png" alt="image" /></p>
+
+<p>4.然后在 File &gt; New &gt; Directory 输入aidl（建立一个aidl文件夹），再点击 File &gt; New &gt; Package中新建一个包，叫做com.android.vending.billing，然后把<strong>IInAppBillingService.aidl</strong>文件拷进去，形成这样的一个结构。</p>
+
+<p><img src="https://ooo.0o0.ooo/2016/03/09/56e0e0e6dfccc.png" alt="image" /><br />
+5.在manifest里添加权限：<strong><uses-permission android:name="com.android.vending.BILLING"></uses-permission></strong> 到此准备工作基本完成。最后别忘了build一下你的module，让aidl文件生成相应的java文件，才可以使用。</p>
+
+<h1 id="建立service连接">建立service连接</h1>
+
+<p>在你的MainActivity里添加这段代码，建立app和google play的连接。 <br />
+这个ServiceConnection是bindService()的一个参数，用来表明activity和service的连接状态，如果连接成功则运行onServiceConnected()方法，即给mService赋值。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	  <span class="no">IInAppBillingService</span> <span class="n">mService</span><span class="p">;</span>
+	  
+    <span class="no">ServiceConnection</span> <span class="n">mServiceConn</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">ServiceConnection</span><span class="p">()</span> <span class="p">{</span>
+        <span class="vi">@Override</span>
+        <span class="kp">public</span> <span class="n">void</span> <span class="n">onServiceDisconnected</span><span class="p">(</span><span class="no">ComponentName</span> <span class="nb">name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mService</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="vi">@Override</span>
+        <span class="kp">public</span> <span class="n">void</span> <span class="n">onServiceConnected</span><span class="p">(</span><span class="no">ComponentName</span> <span class="nb">name</span><span class="p">,</span>
+                                       <span class="no">IBinder</span> <span class="n">service</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mService</span> <span class="o">=</span> <span class="no">IInAppBillingService</span><span class="o">.</span><span class="no">Stub</span><span class="p">.</span><span class="nf">asInterface</span><span class="p">(</span><span class="n">service</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>  
+<span class="err">然后在</span><span class="n">onCreate</span><span class="p">()</span><span class="err">方法中实现绑定，来读取</span><span class="n">service</span><span class="err">中的数据或方法</span>    
+	
+	<span class="no">Intent</span> <span class="n">serviceIntent</span> <span class="o">=</span>
+	        <span class="kp">new</span> <span class="no">Intent</span><span class="p">(</span><span class="s2">"com.android.vending.billing.InAppBillingService.BIND"</span><span class="p">);</span>
+	<span class="n">serviceIntent</span><span class="p">.</span><span class="nf">setPackage</span><span class="p">(</span><span class="s2">"com.android.vending"</span><span class="p">);</span>
+	<span class="n">bindService</span><span class="p">(</span><span class="n">serviceIntent</span><span class="p">,</span> <span class="n">mServiceConn</span><span class="p">,</span> <span class="no">Context</span><span class="o">.</span><span class="no">BIND_AUTO_CREATE</span><span class="p">);</span> 
+	</code></pre></figure>
+
+<h1 id="商品查询">商品查询</h1>
+
+<p>示例代码：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> 
+	 <span class="kp">public</span> <span class="n">void</span> <span class="n">query</span><span class="p">(</span><span class="no">View</span> <span class="n">view</span><span class="p">){</span>
+	<span class="sr">//</span><span class="err">为了防止阻塞主线程，所以新建一个线程</span>
+	        <span class="kp">new</span> <span class="no">Thread</span><span class="p">(){</span>
+	            <span class="vi">@Override</span>
+	            <span class="kp">public</span> <span class="n">void</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
+	                <span class="k">super</span><span class="p">.</span><span class="nf">run</span><span class="p">();</span>
+	                <span class="no">ArrayList</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">skuList</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">ArrayList</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span><span class="p">();</span>
+	                <span class="n">skuList</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"开发者中心里设置的商品id，也称sku"</span><span class="p">);</span>
+	                <span class="no">Bundle</span> <span class="n">querySkus</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Bundle</span><span class="p">();</span>
+	                <span class="n">querySkus</span><span class="p">.</span><span class="nf">putStringArrayList</span><span class="p">(</span><span class="s2">"ITEM_ID_LIST"</span><span class="p">,</span> <span class="n">skuList</span><span class="p">);</span>
+	                <span class="n">try</span> <span class="p">{</span>
+	                    <span class="no">Bundle</span> <span class="n">skuDetails</span><span class="p">;</span>
+	                    <span class="sr">//</span><span class="mi">3</span><span class="err">是</span><span class="no">API</span><span class="err">的版本号，然后是包名，购买方式是应用内购买</span><span class="n">inapp</span><span class="err">，最后把刚刚输入的商品</span><span class="n">id</span><span class="err">列表传进去</span>
+	                    <span class="n">skuDetails</span> <span class="o">=</span> <span class="n">mService</span><span class="p">.</span><span class="nf">getSkuDetails</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span>
+	                            <span class="n">getPackageName</span><span class="p">(),</span> <span class="s2">"inapp"</span><span class="p">,</span> <span class="n">querySkus</span><span class="p">);</span>
+	                    <span class="n">int</span> <span class="n">response</span> <span class="o">=</span> <span class="n">skuDetails</span><span class="p">.</span><span class="nf">getInt</span><span class="p">(</span><span class="s2">"RESPONSE_CODE"</span><span class="p">);</span>
+	                    <span class="sr">//</span><span class="err">如果返回值为</span><span class="mi">0</span><span class="err">，则说明请求成功</span>
+	                    <span class="k">if</span> <span class="p">(</span><span class="n">response</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	                        <span class="no">ArrayList</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">responseList</span>
+	                                <span class="o">=</span> <span class="n">skuDetails</span><span class="p">.</span><span class="nf">getStringArrayList</span><span class="p">(</span><span class="s2">"DETAILS_LIST"</span><span class="p">);</span>
+	
+	                        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">thisResponse</span> <span class="p">:</span> <span class="n">responseList</span><span class="p">)</span> <span class="p">{</span>
+	                            <span class="no">JSONObject</span> <span class="n">object</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">JSONObject</span><span class="p">(</span><span class="n">thisResponse</span><span class="p">);</span>
+	                            <span class="no">String</span> <span class="n">sku</span> <span class="o">=</span> <span class="n">object</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="s2">"productId"</span><span class="p">);</span>
+	                            <span class="no">String</span> <span class="n">price</span> <span class="o">=</span> <span class="n">object</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="s2">"price"</span><span class="p">);</span>
+	                            <span class="no">Log</span><span class="p">.</span><span class="nf">v</span><span class="p">(</span><span class="s2">"info"</span><span class="p">,</span><span class="n">sku</span><span class="o">+</span><span class="s2">"-----"</span><span class="o">+</span><span class="n">price</span><span class="p">);</span>
+	                        <span class="p">}</span>
+	                    <span class="p">}</span>
+	                <span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">RemoteException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+	                    <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+	                <span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">JSONException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+	                    <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+	                <span class="p">}</span>
+	
+	            <span class="p">}</span>
+	
+	        <span class="p">}.</span><span class="nf">run</span><span class="p">();</span>
+	    <span class="p">}</span>
+	    </code></pre></figure>
+
+<h1 id="商品购买">商品购买</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">      <span class="no">Bundle</span> <span class="n">buyIntentBundle</span> <span class="o">=</span> <span class="n">mService</span><span class="p">.</span><span class="nf">getBuyIntent</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">getPackageName</span><span class="p">(),</span><span class="s2">"商品的id"</span><span class="p">,</span> <span class="s2">"inapp"</span><span class="p">,</span> <span class="s2">"developerPayload（商品的附加信息，google在返回购买信息的时候会返回）"</span><span class="p">);</span>
+        <span class="no">PendingIntent</span> <span class="n">pendingIntent</span> <span class="o">=</span> <span class="n">buyIntentBundle</span><span class="p">.</span><span class="nf">getParcelable</span><span class="p">(</span><span class="s2">"BUY_INTENT"</span><span class="p">);</span>
+        	<span class="sr">//</span><span class="err">这个方法和</span><span class="n">startActivityForResult</span><span class="err">类似，然而我看了半天看不懂，只知道最后会调用</span><span class="n">onActivityResult</span><span class="p">()</span><span class="err">。</span>        <span class="n">startIntentSenderForResult</span><span class="p">(</span><span class="n">pendingIntent</span><span class="p">.</span><span class="nf">getIntentSender</span><span class="p">(),</span> <span class="mi">1001</span><span class="p">,</span> <span class="kp">new</span> <span class="no">Intent</span><span class="p">(),</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">valueOf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">valueOf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span><span class="no">Integer</span><span class="p">.</span><span class="nf">valueOf</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>  
+    </code></pre></figure>
+
+<p>购买完成后会调用onActivityResult()，可以在这里读取数据：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	 <span class="vi">@Override</span>
+	    <span class="kp">protected</span> <span class="n">void</span> <span class="n">onActivityResult</span><span class="p">(</span><span class="n">int</span> <span class="n">requestCode</span><span class="p">,</span> <span class="n">int</span> <span class="n">resultCode</span><span class="p">,</span> <span class="no">Intent</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+	            <span class="k">if</span> <span class="p">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="mi">1001</span><span class="p">)</span> <span class="p">{</span>
+	                <span class="n">int</span> <span class="n">responseCode</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">getIntExtra</span><span class="p">(</span><span class="s2">"RESPONSE_CODE"</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	                <span class="no">String</span> <span class="n">purchaseData</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">getStringExtra</span><span class="p">(</span><span class="s2">"INAPP_PURCHASE_DATA"</span><span class="p">);</span>
+	                <span class="no">String</span> <span class="n">dataSignature</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">getStringExtra</span><span class="p">(</span><span class="s2">"INAPP_DATA_SIGNATURE"</span><span class="p">);</span>
+	
+	                <span class="k">if</span> <span class="p">(</span><span class="n">resultCode</span> <span class="o">==</span> <span class="no">RESULT_OK</span><span class="p">)</span> <span class="p">{</span>
+	                    <span class="n">try</span> <span class="p">{</span>
+	                        <span class="no">JSONObject</span> <span class="n">jo</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">JSONObject</span><span class="p">(</span><span class="n">purchaseData</span><span class="p">);</span>
+	                        <span class="no">String</span> <span class="n">sku</span> <span class="o">=</span> <span class="n">jo</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="s2">"productId"</span><span class="p">);</span>
+	                        <span class="no">Log</span><span class="p">.</span><span class="nf">v</span><span class="p">(</span><span class="s2">"info_code"</span><span class="p">,</span><span class="no">String</span><span class="p">.</span><span class="nf">valueOf</span><span class="p">(</span><span class="n">responseCode</span><span class="p">));</span>
+	                        <span class="sr">//</span><span class="err">这里的签名是为安全性做的，可以用公钥来验证来源是否真的是</span><span class="n">google</span>
+	                        <span class="no">Log</span><span class="p">.</span><span class="nf">v</span><span class="p">(</span><span class="s2">"info_signature"</span><span class="p">,</span><span class="no">String</span><span class="p">.</span><span class="nf">valueOf</span><span class="p">(</span><span class="n">dataSignature</span><span class="p">));</span>
+	                        <span class="no">Log</span><span class="p">.</span><span class="nf">v</span><span class="p">(</span><span class="s2">"info"</span><span class="p">,</span><span class="n">jo</span><span class="p">.</span><span class="nf">toString</span><span class="p">());</span>
+	                    <span class="p">}</span>
+	                    <span class="kp">catch</span> <span class="p">(</span><span class="no">JSONException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+	                        <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+	                    <span class="p">}</span>
+	                <span class="p">}</span>
+	            <span class="p">}</span>
+	
+	    <span class="p">}</span>  
+	</code></pre></figure>
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

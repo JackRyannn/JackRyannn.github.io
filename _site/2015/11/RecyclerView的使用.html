@@ -1,0 +1,292 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">RecyclerView的使用</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>26 Nov 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <p>RecyclerView是2015年谷歌大会上发布的，介绍里第一句是这样说的：<code class="highlighter-rouge"> A flexible view for providing a limited window into a large data set.</code>在有限的窗口内展现大量数据的灵活的视图。用它可以代替listview和gridview，更重要的是它是高度的解耦，在使用的时候就能够体会到了。</p>
+
+<p>简单写的例子，在注释中有对它的解释和思考。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">			<span class="kp">public</span> <span class="k">class</span> <span class="nc">MainActivity</span> <span class="n">extends</span> <span class="no">AppCompatActivity</span> <span class="p">{</span>
+		<span class="sr">//</span>    <span class="err">必要的三部分，相比于</span><span class="n">listView</span><span class="err">多了一个</span><span class="n">layoutManager</span><span class="err">，</span><span class="n">layoutManager</span><span class="err">是一个抽象类</span>
+		<span class="sr">//</span>    <span class="err">用来测量和放置</span><span class="n">item</span><span class="err">，也可以制定</span><span class="n">item</span><span class="err">的回收规则，在这里，我们直接用的他的子类</span><span class="no">LinearLayoutManager</span>
+		    <span class="kp">private</span> <span class="no">RecyclerView</span> <span class="n">recyclerView</span><span class="p">;</span>
+		    <span class="kp">private</span> <span class="no">RecyclerView</span><span class="o">.</span><span class="no">Adapter</span> <span class="n">adapter</span><span class="p">;</span>
+		    <span class="kp">private</span> <span class="no">RecyclerView</span><span class="o">.</span><span class="no">LayoutManager</span> <span class="n">layoutManager</span><span class="p">;</span>
+		<span class="sr">//</span>    <span class="err">数据</span><span class="n">list</span>
+		    <span class="kp">private</span> <span class="no">List</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">list</span><span class="p">;</span>
+		    <span class="vi">@Override</span>
+		    <span class="kp">protected</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">(</span><span class="no">Bundle</span> <span class="n">savedInstanceState</span><span class="p">)</span> <span class="p">{</span>
+		        <span class="n">requestWindowFeature</span><span class="p">(</span><span class="no">Window</span><span class="o">.</span><span class="no">FEATURE_NO_TITLE</span><span class="p">);</span>
+		        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+		        <span class="n">setContentView</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">content_main</span><span class="p">);</span>
+		        <span class="sr">//</span><span class="err">初始化数据</span>
+		        <span class="n">initData</span><span class="p">();</span>
+		        <span class="n">recyclerView</span> <span class="o">=</span> <span class="p">(</span><span class="no">RecyclerView</span><span class="p">)</span> <span class="n">findViewById</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">listView</span><span class="p">);</span>
+		        <span class="n">layoutManager</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">LinearLayoutManager</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+		<span class="sr">//</span>        <span class="n">adpater</span><span class="err">需要重写三个方法，必须重新创建</span><span class="no">ViewHolder</span>
+		        <span class="n">adapter</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">RecyclerView</span><span class="o">.</span><span class="no">Adapter</span><span class="p">()</span> <span class="p">{</span>
+		            <span class="vi">@Override</span>
+		            <span class="kp">public</span> <span class="no">RecyclerView</span><span class="o">.</span><span class="no">ViewHolder</span> <span class="n">onCreateViewHolder</span><span class="p">(</span><span class="no">ViewGroup</span> <span class="n">parent</span><span class="p">,</span> <span class="n">int</span> <span class="n">viewType</span><span class="p">)</span> <span class="p">{</span>
+		                <span class="no">MyViewHolder</span> <span class="n">viewHolder</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">MyViewHolder</span><span class="p">(</span><span class="no">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="no">MainActivity</span><span class="p">.</span><span class="nf">this</span><span class="p">).</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">item_listview</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="kp">false</span><span class="p">));</span>
+		                <span class="k">return</span> <span class="n">viewHolder</span><span class="p">;</span>
+		            <span class="p">}</span>
+		<span class="sr">//</span><span class="err">用来更新</span><span class="n">item</span><span class="err">里的内容，不要用这里的</span><span class="n">position</span><span class="err">来做别的事情，比如</span><span class="n">onClick</span><span class="err">事件，你可以用</span><span class="n">getAdapterPosition</span><span class="err">来获取更新后的</span><span class="n">position</span>
+		            <span class="vi">@Override</span>
+		            <span class="kp">public</span> <span class="n">void</span> <span class="n">onBindViewHolder</span><span class="p">(</span><span class="no">RecyclerView</span><span class="o">.</span><span class="no">ViewHolder</span> <span class="n">holder</span><span class="p">,</span> <span class="n">int</span> <span class="n">position</span><span class="p">)</span> <span class="p">{</span>
+		                <span class="p">((</span><span class="no">MyViewHolder</span><span class="p">)</span> <span class="n">holder</span><span class="p">).</span><span class="nf">textView</span><span class="p">.</span><span class="nf">setText</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">position</span><span class="p">));</span>
+		            <span class="p">}</span>
+		            <span class="vi">@Override</span>
+		            <span class="kp">public</span> <span class="n">int</span> <span class="n">getItemCount</span><span class="p">()</span> <span class="p">{</span>
+		                <span class="k">return</span> <span class="n">list</span><span class="p">.</span><span class="nf">size</span><span class="p">();</span>
+		            <span class="p">}</span>
+		<span class="sr">//</span><span class="no">ViewHolder</span><span class="err">可以通过新建</span><span class="n">view</span><span class="err">填充或者从</span><span class="n">xml</span><span class="err">布局文件填充</span>
+		            <span class="k">class</span> <span class="nc">MyViewHolder</span> <span class="n">extends</span> <span class="no">RecyclerView</span><span class="o">.</span><span class="no">ViewHolder</span> <span class="p">{</span>
+		                <span class="no">TextView</span> <span class="n">textView</span><span class="p">;</span>
+	
+		                <span class="kp">public</span> <span class="no">MyViewHolder</span><span class="p">(</span><span class="no">View</span> <span class="n">itemView</span><span class="p">)</span> <span class="p">{</span>
+		                    <span class="k">super</span><span class="p">(</span><span class="n">itemView</span><span class="p">);</span>
+		                    <span class="n">textView</span> <span class="o">=</span> <span class="p">(</span><span class="no">TextView</span><span class="p">)</span> <span class="n">itemView</span><span class="p">.</span><span class="nf">findViewById</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">textView</span><span class="p">);</span>
+		                <span class="p">}</span>
+		            <span class="p">}</span>
+		        <span class="p">};</span>
+		<span class="sr">//</span>        <span class="err">最后把</span><span class="n">adapter</span><span class="err">和</span><span class="n">layoutManager</span><span class="err">都设置好就可以了。</span>
+		        <span class="n">recyclerView</span><span class="p">.</span><span class="nf">setAdapter</span><span class="p">(</span><span class="n">adapter</span><span class="p">);</span>
+		        <span class="n">recyclerView</span><span class="p">.</span><span class="nf">setLayoutManager</span><span class="p">(</span><span class="n">layoutManager</span><span class="p">);</span>
+		    <span class="p">}</span>
+		
+		    <span class="sr">//</span><span class="err">初始化的方法</span>
+		    <span class="kp">private</span> <span class="n">void</span> <span class="n">initData</span><span class="p">()</span> <span class="p">{</span>
+		        <span class="n">list</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+		        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		            <span class="n">list</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"id:"</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+		        <span class="p">}</span>
+		    <span class="p">}</span>
+		<span class="p">}</span>
+		</code></pre></figure>
+
+<p>这样感觉，虽然它比listView多了一个LayoutManager，但是它的adapter没有重写BaseAdapter那么麻烦，而且高度解耦，简洁明了。</p>
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

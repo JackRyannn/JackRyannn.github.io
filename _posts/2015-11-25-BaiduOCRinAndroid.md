@@ -9,7 +9,8 @@ tags:
 
 ---
   
-##百度OCR
+百度OCR
+===
 　　百度OCR是百度今年六月份公布的，分企业版和个人版，用法都差不多。大家可以先看一下他的官方网页介绍  [百度OCR文字识别个人版](http://apistore.baidu.com/apiworks/servicedetail/146.html)。  
 　　他是通过post方法来调用api的，主要有四部分参数：  
 1.url地址  
@@ -20,6 +21,7 @@ tags:
 
 我用的网络框架是okhttp，其他框架也可以，只是我比较喜欢这个框架。需要注意的是，图片上传的格式是string，用base64处理，android里有`android.util.Base64`这个库，可以方便的将字符串进行base64处理：`string = Base64.encodeToString(bytes, Base64.NO_WRAP);`但需要注意的是一定要用`Base64.NO_WRAP`这个flag，我们可以看一下下面这个解释，这个flag转换后会删去换行符，让输出只有一行，这个符合百度OCR处理的规则。
 
+	
     /**
      * Encoder flag bit to omit all line terminators (i.e., the output
      * will be on one long line).
@@ -35,6 +37,7 @@ tags:
   
 其实也没什么好说的，下面放源码（我用了拍照和相册两个获取图片的方法）：      
 
+	{% highlight ruby %}
 	package com.jackryannn.graduation;
 	import android.app.Activity;
 	import android.content.Intent;
@@ -178,10 +181,12 @@ tags:
         }).start();
     }
 
-	}    
+	}  
+	{% endhighlight %}  
   
 xml文档：  
   
+	{% highlight ruby %}
 	<?xml version="1.0" encoding="utf-8"?>
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    xmlns:tools="http://schemas.android.com/tools"
@@ -224,3 +229,4 @@ xml文档：
 
 
 	</RelativeLayout>
+	{% endhighlight %}

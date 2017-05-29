@@ -1,0 +1,275 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">Android适配问题初认识</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>13 Dec 2014</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <p>曾经看过一篇学习方法的文章，学习效率最高的方法就是教别人（强行教别人）。</p>
+
+<p>这就是我开始写博客的目的，很自私，但是这种既能分享经验又能提高自己的自私又何乐不为呢？</p>
+
+<p>我在做一个Android app，项目名称叫做数字中传手机客户端，2014年暑假学习了Android并且将程序框架编了出来，也并没有太多注意程序的美化。</p>
+
+<p>可能实在是丑爆了！我觉得略微研究一下Android适配问题。</p>
+
+<p>程序界面正确显示在屏幕上主要由 屏幕像素密度 和 屏幕尺寸 决定的。</p>
+
+<p>这里先探讨一下屏幕分辨率。</p>
+
+<p>这里拿我的华为荣耀6举例~~ 屏幕分辨率为1920*1080。</p>
+
+<p>所以我们可以这样表示，手机长1920px，宽1080px。</p>
+
+<p>知道分辨率后我们再来推导另一个重要的参数：屏幕像素密度density</p>
+
+<p>有两个单位   dpi （Dots per inch每英寸‘2.75cm’的点数）和  ppi（Pixel per inch 每英寸的像素），在很多地方都是可以混用的。</p>
+
+<p>我的手机5英寸，宽1080ppi，长14cm，宽7cm.</p>
+
+<p>x_density = 1080/(7/2.75) = 424 ppi</p>
+
+<p>当然我得到的这个数是个约等于，官方给出的结果是441。</p>
+
+<p>好的，接下来是在开发android程序里常用的一个表示图像的单位dp了。</p>
+
+<p>他是一种可以根据屏幕像素密度而变化的单位，举个栗子</p>
+
+<p>android给了一个标准屏幕像素密度 160ppi</p>
+
+<p>所以在该屏幕像素密度下，1dp = 1px(像素）</p>
+
+<p>当在我的手机下运行时，屏幕像素密度变成了441，是原来的441/160 = 2.75625。</p>
+
+<p>那么这时 1dp = 2.75625 px。</p>
+
+<p>屏幕的长宽用换算后的dp表示 就是</p>
+
+<p>长 1920 / 2.75625 = 696.6 dp</p>
+
+<p>宽 1080 / 2.75625 = 391.8 dp</p>
+
+<p>用dp表示的一个好处就是他可以随着屏幕密度的变化而变化，所以我们引用图片的时候都是用dp做单位而不是px。但是还有一个问题就是你的图片像素不高，在density很高的设备上显示效果就不好了，所以最好可以针对不同的density做相对应的图片，在Android2.1以及之后，出现了drawable-ldpi、drawable-mdpi、drawable-hdpi、drawable-xhdpi、drawable-xxhdpi。在这些文件下提供的图片大小最好是3:4:6:8:12（别问我为什么我也不知道~）。程序在不同的屏幕密度下运行时，会首先去符合当前屏幕密度的文件夹下找对应的资源，如果没有，系统会以最省力为前提去别的文件夹下找对应的资源并对其进行相应的缩放，如果还没有，就回去默认的drawable文件夹下找，然后按照2.1之前的规则缩放。如果还没有找到，应用就会报错或者直接crash掉了。当然如果清晰度够高的话一张图片就够用了。不过影响适配的还有另一个因素就是屏幕尺寸，有的手机宽有的手机窄，该怎么办！
+下次再写~~</p>
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

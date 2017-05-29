@@ -1,0 +1,330 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">基于android的图像、文字识别｜tess－two导入android studio</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>21 Nov 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Andriod">Andriod</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <h1 id="关于毕设">关于毕设</h1>
+<p>　　没想到这么快就要做毕设了，毕设也没有想象中的那么难，好像跟平常的一次结课论文一样。
+这次毕设要做的是三部分内容:</p>
+
+<p>1.将拍照，获取图片，上传图片。 <br />
+2.二维码扫描 <br />
+3.文字识别</p>
+
+<p>　　前两部分没有什么难度，主要就是文字识别这部分了。<br />
+　　毕设中对速度和准确度有一定要求，对网络反馈也有时间的要求，所以我也不知道文字识别这部分是放到手机端进行好，还是上传图片在服务器处理好，不过我只负责终端这部分，所以我就在手机这处理了。</p>
+
+<h1 id="文字识别">文字识别</h1>
+
+<p>　　文字识别其实并不需要具体做算法这方面，只要把图片放到ocr工具里就可以了。ocr（optical character recognition｜光学字符识别）。我用到的工具是<code class="highlighter-rouge">tess－two</code>，它是tesseract-android-tools的一个分支，它整合了android 的api和tesseract OCR 和 一些图像处理库相关的build文件。
+　　具体可以查看它的github：<a href="https://github.com/rmtheis/tess-two">tess－two</a>。<br />
+　　然而在它的github介绍里只有如何导入eclipse，而没有如何导入android studio，如果按普通的方式导入出现了各种各样的错误，我用了将近一天的时间就为了导入这个库。</p>
+
+<h1 id="注意">注意！</h1>
+
+<p>这是导入eclipse的步骤，Android Studio往下拉</p>
+
+<p>首先你要clone这个库，然后你要有以下三步：</p>
+
+<ol>
+  <li>ndk-build</li>
+  <li>android update project –path .</li>
+  <li>ant release</li>
+</ol>
+
+<p>为此，你要安装ndk，android studio安装ndk特别简单，在file -&gt; project structure      -&gt;SDK location 里就有ndk的自动下载，我已经下载好了，所以只显示了ndk的路径。</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/11/20/564ecf6405087.png" alt="image" /></p>
+
+<p>然后你要把android sdk的tools加入到环境变量，mac的终端的环境变量添加办法网上有很多，但是都不太方便，我写一下我的方法。<br />
+打开终端，输入<code class="highlighter-rouge">vim .bash_profile</code>,如果不是用户家目录，可以用<code class="highlighter-rouge">cd ~</code>返回至该目录。</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/11/20/564ef472d529e.png" alt="image" /></p>
+
+<p>然后回车进入vim编辑器</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/11/20/564ef47ebb4a8.png" alt="image" /></p>
+
+<p>　　按照export那一串的格式添加好，按esc退出编辑，按<code class="highlighter-rouge">shift＋ ：</code>再输入<code class="highlighter-rouge">wq</code>保存并退出。<br />
+最后一步，安装ant，详见<a href="http://cache.baiducontent.com/c?m=9f65cb4a8c8507ed4fece7631046893b4c4380146d96864968d4e414c4224618143da5e067754c1980853a3c50f11e41bca770216c5d61aa9dce824fdeb8982b3bcd7a742613d60145960eafba1d798066c304b7b81996e9ac74&amp;p=c0769a4791934eac58e8d5271b5e80&amp;newp=9f7cdc15d9c041aa44a2c7710f5091231610db2151d4d610639b&amp;user=baidu&amp;fm=sc&amp;query=brew+install+ant&amp;qid=952a11e100002fe2&amp;p1=2">教程</a>。<br />
+完成三步后，把tess—two文件夹当作library库导入eclipse即可。</p>
+
+<h1 id="android-studio如何导入tesstwo">Android Studio如何导入TESS－TWO</h1>
+
+<p>　　我翻了好多文章，google了大半天，才找到一个可行的办法。这篇文章是十月三号发布的。 
+网站链接：<a href="http://androidadvance.com/blog/tutorial-getting-started-with-tessaract-ocr-in-android-android-studio/">Android Advance Blog</a>  <br />
+英文一般，随便翻译一下：</p>
+
+<p>　　Tesseract是现在可用的最准确的OCR开源库，结合了Leptonic（一个类似OpenCV的数字图像处理库），它可以读取广泛的图像格式，并且将其转换成超过六十种语言的文字。在1995年UNLV准确性测试中位列前三，在1995年和2006年之间，它并没有什么突破性进展，直到被谷歌管理，有了大幅度优化，现在遵循 Apache License 2.0 协议。</p>
+
+<p>具体步骤：<br />
+1.清空你的android studio，删除eclipse（不会有人再使用它了），保持什么都没安装的状态和最新的工具，否则不要抱怨当你编译时遇到什么奇怪的问题。<br />
+我会尽力让教程的程序运行在新的版本里，在我写这篇文章的时候，我用的是Android Studio 1.4 和 android-ndk-r10e,jdk 1.8.0-45.注：我的版本是Android Studio 1.5 ，jdk1.7.0_79，ndk是andriod studio自动下载的，叫ndk－bundle，版本号不知道。。而且项目我并没有清空，这一步不是必须的。<br />
+2.下载安装jdk、jre、添加到环境变量，ndk安装巴拉巴拉……  （ndk也要添加环境变量）
+然后要把你下载的tess－two用ndk来build一下。<br />
+3.创建一个“new world”的android studio工程，编译它，确保能够运行。注：老外好细致～<br />
+4.创建一个叫libraries的文件夹，举个例子，你的工程叫做FirstProject，你要创建FirstProject/libraries文件夹，现在把你已经ndk－build的tess－two文件夹放进这个libraries文件夹，然后创建一个build.gradle文件放到tess－two文件夹里，（注：你可以复制别的module里的build.gradle），注意，这是最难的部分，你的gradle版本、build版本可能会更高，你要重写它和你的版本保持一致，这里提供一个build.gradle的模版：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="n">buildscript</span> <span class="p">{</span>
+    <span class="n">repositories</span> <span class="p">{</span>
+        <span class="n">mavenCentral</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="n">dependencies</span> <span class="p">{</span>
+        <span class="n">classpath</span> <span class="s1">'com.android.tools.build:gradle:1.3.0'</span>
+    <span class="p">}</span>
+    <span class="p">}</span>  
+
+    <span class="n">apply</span> <span class="ss">plugin: </span><span class="s1">'android-library'</span>  
+	<span class="n">android</span> <span class="p">{</span>
+    <span class="n">compileSdkVersion</span> <span class="mi">23</span>
+    <span class="n">buildToolsVersion</span> <span class="s2">"23.0.1"</span>
+
+    <span class="n">defaultConfig</span> <span class="p">{</span>
+        <span class="n">minSdkVersion</span> <span class="mi">15</span>
+        <span class="n">targetSdkVersion</span> <span class="mi">23</span>
+    <span class="p">}</span>
+
+    <span class="n">sourceSets</span><span class="p">.</span><span class="nf">main</span> <span class="p">{</span>
+        <span class="n">manifest</span><span class="p">.</span><span class="nf">srcFile</span> <span class="s1">'AndroidManifest.xml'</span>
+        <span class="n">java</span><span class="p">.</span><span class="nf">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'src'</span><span class="p">]</span>
+        <span class="n">resources</span><span class="p">.</span><span class="nf">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'src'</span><span class="p">]</span>
+        <span class="n">res</span><span class="p">.</span><span class="nf">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'res'</span><span class="p">]</span>
+        <span class="n">jniLibs</span><span class="p">.</span><span class="nf">srcDirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'libs'</span><span class="p">]</span>
+    <span class="p">}</span>
+	<span class="p">}</span>  
+	</code></pre></figure>
+
+<p>　　compileSdkVersion、buildToolsVersion、minSdkVersion、targetSdkVersion这些都和项目保持统一就行了。<br />
+　　然后在工程的settings.gradle文件里添加<code class="highlighter-rouge">include ':libraries:tess-two'</code><br />
+5.（注，其实到这一步重新编译一下没有错误就成功了，接下来他导入了一个例子，然而这个例子时间有点久了，我们可以直接自己使用，所以这一步不解释了。）</p>
+
+<p>我会把我的工程上传到github，<a href="https://github.com/JackRyannn/Tess-twoInAndroidStudio">点击此处跳转</a>。</p>
+
+<p>　　</p>
+
+<p>　　</p>
+
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

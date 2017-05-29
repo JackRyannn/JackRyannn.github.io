@@ -1,0 +1,453 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">Android系统中百度OCR的使用说明</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>26 Nov 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <h1 id="百度ocr">百度OCR</h1>
+<p>　　百度OCR是百度今年六月份公布的，分企业版和个人版，用法都差不多。大家可以先看一下他的官方网页介绍  <a href="http://apistore.baidu.com/apiworks/servicedetail/146.html">百度OCR文字识别个人版</a>。<br />
+　　他是通过post方法来调用api的，主要有四部分参数：<br />
+1.url地址<br />
+2.你的apikey<br />
+3.header中的参数<br />
+4.body中的请求参数</p>
+
+<p>我用的网络框架是okhttp，其他框架也可以，只是我比较喜欢这个框架。需要注意的是，图片上传的格式是string，用base64处理，android里有<code class="highlighter-rouge">android.util.Base64</code>这个库，可以方便的将字符串进行base64处理：<code class="highlighter-rouge">string = Base64.encodeToString(bytes, Base64.NO_WRAP);</code>但需要注意的是一定要用<code class="highlighter-rouge">Base64.NO_WRAP</code>这个flag，我们可以看一下下面这个解释，这个flag转换后会删去换行符，让输出只有一行，这个符合百度OCR处理的规则。</p>
+
+<div class="highlighter-rouge"><div class="rougeHighlight"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5</pre></td><td class="code"><pre>/**
+ * Encoder flag bit to omit all line terminators (i.e., the output
+ * will be on one long line).
+ */
+public static final int NO_WRAP = 2;  
+</pre></td></tr></tbody></table>
+</div>
+</div>
+
+<p>他的官方网页上说在base64处理后还要用URLEncoder处理，但是我加上这一步就会报错，不加反而正常运行，不知道是不是框架里自动处理了，我也没有功夫细细研究，所以如果你有<code class="highlighter-rouge">－1</code>的错误，可以尝试修改这部分。</p>
+
+<p>注意：手机的api貌似有一些限制，比如大小，好像是300k，而且识别率也不如他给的demo高，同样一张照片，而且两个效果都一般般。</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/11/24/565523015b6f7.jpg" alt="手机api测试" /><br />
+<img src="https://ooo.0o0.ooo/2015/11/24/56552301922a0.png" alt="image" /></p>
+
+<p>其实也没什么好说的，下面放源码（我用了拍照和相册两个获取图片的方法）：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="n">package</span> <span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">graduation</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">app</span><span class="o">.</span><span class="no">Activity</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">content</span><span class="o">.</span><span class="no">Intent</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">graphics</span><span class="o">.</span><span class="no">Bitmap</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">net</span><span class="o">.</span><span class="no">Uri</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">os</span><span class="o">.</span><span class="no">AsyncTask</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">os</span><span class="o">.</span><span class="no">Bundle</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">os</span><span class="o">.</span><span class="no">Handler</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">os</span><span class="o">.</span><span class="no">Message</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">provider</span><span class="o">.</span><span class="no">MediaStore</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">Base64</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">widget</span><span class="o">.</span><span class="no">ImageView</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">widget</span><span class="o">.</span><span class="no">TextView</span><span class="p">;</span>
+	
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">Callback</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">FormEncodingBuilder</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">OkHttpClient</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">Request</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">RequestBody</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="nf">squareup</span><span class="p">.</span><span class="nf">okhttp</span><span class="o">.</span><span class="no">Response</span><span class="p">;</span>
+	
+	<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="nf">json</span><span class="o">.</span><span class="no">JSONArray</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">org</span><span class="p">.</span><span class="nf">json</span><span class="o">.</span><span class="no">JSONObject</span><span class="p">;</span>
+	
+	<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">io</span><span class="o">.</span><span class="no">ByteArrayOutputStream</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">io</span><span class="o">.</span><span class="no">IOException</span><span class="p">;</span>
+	
+	<span class="n">import</span> <span class="n">butterknife</span><span class="o">.</span><span class="no">Bind</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">butterknife</span><span class="o">.</span><span class="no">ButterKnife</span><span class="p">;</span>
+	<span class="n">import</span> <span class="n">butterknife</span><span class="o">.</span><span class="no">OnClick</span><span class="p">;</span>
+	
+	
+	<span class="kp">public</span> <span class="k">class</span> <span class="nc">Ocr2Activity</span> <span class="n">extends</span> <span class="no">Activity</span> <span class="p">{</span>
+	    <span class="no">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">"http://apis.baidu.com/apistore/idlocr/ocr"</span><span class="p">;</span>
+	    <span class="no">Handler</span> <span class="n">handler</span><span class="p">;</span>
+	    <span class="vi">@OnClick</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">takepic</span><span class="p">)</span>
+	    <span class="n">void</span> <span class="n">takepic</span><span class="p">()</span> <span class="p">{</span>
+	        <span class="no">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">MediaStore</span><span class="o">.</span><span class="no">ACTION_IMAGE_CAPTURE</span><span class="p">);</span>
+	        <span class="n">startActivityForResult</span><span class="p">(</span><span class="n">intent</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+	    <span class="p">}</span>
+
+    <span class="vi">@OnClick</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">pickpic</span><span class="p">)</span>
+    <span class="n">void</span> <span class="n">pickpic</span><span class="p">()</span> <span class="p">{</span>
+        <span class="no">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_PICK</span><span class="p">);</span>
+        <span class="n">intent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"image/*"</span><span class="p">);</span>
+        <span class="n">startActivityForResult</span><span class="p">(</span><span class="n">intent</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="vi">@Bind</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">tessResults</span><span class="p">)</span>
+    <span class="no">TextView</span> <span class="n">tessResults</span><span class="p">;</span>
+    <span class="vi">@Bind</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">imageView</span><span class="p">)</span>
+    <span class="no">ImageView</span> <span class="n">imageView</span><span class="p">;</span>
+
+    <span class="vi">@Override</span>
+    <span class="kp">protected</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">(</span><span class="no">Bundle</span> <span class="n">savedInstanceState</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">);</span>
+        <span class="n">setContentView</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">activity_orc</span><span class="p">);</span>
+        <span class="no">ButterKnife</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Handler</span><span class="p">(){</span>
+            <span class="vi">@Override</span>
+            <span class="kp">public</span> <span class="n">void</span> <span class="n">handleMessage</span><span class="p">(</span><span class="no">Message</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">super</span><span class="p">.</span><span class="nf">handleMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+                <span class="n">tessResults</span><span class="p">.</span><span class="nf">setText</span><span class="p">((</span><span class="no">String</span><span class="p">)</span><span class="n">msg</span><span class="p">.</span><span class="nf">obj</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="vi">@Override</span>
+    <span class="kp">protected</span> <span class="n">void</span> <span class="n">onActivityResult</span><span class="p">(</span><span class="n">int</span> <span class="n">requestCode</span><span class="p">,</span> <span class="n">int</span> <span class="n">resultCode</span><span class="p">,</span> <span class="no">Intent</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="no">Bitmap</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="no">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">getData</span><span class="p">();</span>
+            <span class="n">try</span> <span class="p">{</span>
+                <span class="n">bitmap</span> <span class="o">=</span> <span class="no">MediaStore</span><span class="o">.</span><span class="no">Images</span><span class="o">.</span><span class="no">Media</span><span class="p">.</span><span class="nf">getBitmap</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">getContentResolver</span><span class="p">(),</span> <span class="n">uri</span><span class="p">);</span>
+            <span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="no">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">getExtras</span><span class="p">();</span>
+            <span class="n">bitmap</span> <span class="o">=</span> <span class="p">(</span><span class="no">Bitmap</span><span class="p">)</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"data"</span><span class="p">);</span>
+
+        <span class="p">}</span>
+        <span class="no">String</span> <span class="n">string</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+        <span class="no">ByteArrayOutputStream</span> <span class="n">bStream</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">ByteArrayOutputStream</span><span class="p">();</span>
+        <span class="n">bitmap</span><span class="p">.</span><span class="nf">compress</span><span class="p">(</span><span class="no">Bitmap</span><span class="o">.</span><span class="no">CompressFormat</span><span class="o">.</span><span class="no">JPEG</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bStream</span><span class="p">);</span>
+        <span class="n">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">bStream</span><span class="p">.</span><span class="nf">toByteArray</span><span class="p">();</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">encodeToString</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span> <span class="no">Base64</span><span class="o">.</span><span class="no">NO_WRAP</span><span class="p">);</span>
+        <span class="n">final</span> <span class="no">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">string</span><span class="p">;</span>
+	<span class="sr">//</span>        <span class="n">try</span> <span class="p">{</span>
+	<span class="sr">//</span>            <span class="n">string</span> <span class="o">=</span> <span class="no">URLEncoder</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="s2">"UTF-8"</span><span class="p">);</span>
+	<span class="sr">//</span>        <span class="p">}</span><span class="kp">catch</span> <span class="p">(</span><span class="no">Exception</span> <span class="n">e</span><span class="p">){</span>
+	<span class="sr">//</span>            <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+	<span class="sr">//</span>        <span class="p">}</span>
+        <span class="n">imageView</span><span class="p">.</span><span class="nf">setImageBitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="p">);</span>
+        <span class="kp">new</span> <span class="no">Thread</span><span class="p">(</span><span class="kp">new</span> <span class="no">Runnable</span><span class="p">()</span> <span class="p">{</span>
+            <span class="vi">@Override</span>
+            <span class="kp">public</span> <span class="n">void</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
+                <span class="no">OkHttpClient</span> <span class="n">okHttpClient</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">OkHttpClient</span><span class="p">();</span>
+                <span class="no">RequestBody</span> <span class="n">requestBody</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">FormEncodingBuilder</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"fromdevice"</span><span class="p">,</span> <span class="s2">"android"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"clientip"</span><span class="p">,</span> <span class="s2">"10.10.10.0"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"detecttype"</span><span class="p">,</span> <span class="s2">"LocateRecognize"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"languagetype"</span><span class="p">,</span> <span class="s2">"CHN_ENG"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"imagetype"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"image"</span><span class="p">,</span> <span class="n">str</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">build</span><span class="p">();</span>
+                <span class="n">final</span> <span class="no">Request</span> <span class="n">request</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Request</span><span class="o">.</span><span class="no">Builder</span><span class="p">()</span>
+                <span class="sr">//</span><span class="err">填写自己的</span><span class="n">apikey</span>
+                        <span class="p">.</span><span class="nf">addHeader</span><span class="p">(</span><span class="s2">"apikey"</span><span class="p">,</span> <span class="s2">"a8e0da3977de6d259e082a802035b93c"</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="n">requestBody</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nf">build</span><span class="p">();</span>
+                <span class="n">okHttpClient</span><span class="p">.</span><span class="nf">newCall</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="nf">enqueue</span><span class="p">(</span><span class="kp">new</span> <span class="no">Callback</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="vi">@Override</span>
+                    <span class="kp">public</span> <span class="n">void</span> <span class="n">onFailure</span><span class="p">(</span><span class="no">Request</span> <span class="n">request</span><span class="p">,</span> <span class="no">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+
+                    <span class="p">}</span>
+
+                    <span class="vi">@Override</span>
+                    <span class="kp">public</span> <span class="n">void</span> <span class="n">onResponse</span><span class="p">(</span><span class="no">Response</span> <span class="n">response</span><span class="p">)</span> <span class="n">throws</span> <span class="no">IOException</span> <span class="p">{</span>
+                        <span class="no">String</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="nf">body</span><span class="p">().</span><span class="nf">string</span><span class="p">();</span>
+                        <span class="no">String</span> <span class="n">retStr</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
+                        <span class="n">try</span> <span class="p">{</span>
+                            <span class="no">JSONObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">JSONObject</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+                            <span class="no">JSONArray</span> <span class="n">jsonArray</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">.</span><span class="nf">getJSONArray</span><span class="p">(</span><span class="s2">"retData"</span><span class="p">);</span>
+                            <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">jsonArray</span><span class="p">.</span><span class="nf">length</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                                <span class="n">retStr</span> <span class="o">+=</span> <span class="p">((</span><span class="no">JSONObject</span><span class="p">)</span> <span class="p">(</span><span class="n">jsonArray</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">i</span><span class="p">))).</span><span class="nf">getString</span><span class="p">(</span><span class="s2">"word"</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">e</span><span class="p">.</span><span class="nf">printStackTrace</span><span class="p">();</span>
+                        <span class="p">}</span>
+                        <span class="no">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="no">Message</span><span class="p">.</span><span class="nf">obtain</span><span class="p">();</span>
+                        <span class="n">message</span><span class="p">.</span><span class="nf">obj</span> <span class="o">=</span> <span class="n">retStr</span><span class="p">;</span>
+                        <span class="n">handler</span><span class="p">.</span><span class="nf">sendMessage</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+                        <span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="s2">"ok"</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">}).</span><span class="nf">start</span><span class="p">();</span>
+    <span class="p">}</span>
+
+	<span class="p">}</span>  
+	</code></pre></figure>
+
+<p>xml文档：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="sc">?&gt;</span>
+	<span class="o">&lt;</span><span class="no">RelativeLayout</span> <span class="n">xmlns</span><span class="ss">:android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
+	    <span class="n">xmlns</span><span class="ss">:tools</span><span class="o">=</span><span class="s2">"http://schemas.android.com/tools"</span>
+	    <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+	    <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+	    <span class="n">tools</span><span class="ss">:context</span><span class="o">=</span><span class="s2">".OcrActivity"</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/imageView"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"200dp"</span>
+        <span class="n">android</span><span class="ss">:layout_below</span><span class="o">=</span><span class="s2">"@+id/takepic"</span>
+        <span class="n">android</span><span class="ss">:scaleType</span><span class="o">=</span><span class="s2">"center"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">TextView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/tessResults"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_alignParentBottom</span><span class="o">=</span><span class="s2">"true"</span>
+        <span class="n">android</span><span class="ss">:layout_below</span><span class="o">=</span><span class="s2">"@id/imageView"</span>
+        <span class="n">android</span><span class="ss">:text</span><span class="o">=</span><span class="s2">"null"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">Button</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/takepic"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:text</span><span class="o">=</span><span class="s2">"拍照"</span>
+        <span class="n">android</span><span class="ss">:layout_alignParentTop</span><span class="o">=</span><span class="s2">"true"</span>
+        <span class="n">android</span><span class="ss">:layout_toStartOf</span><span class="o">=</span><span class="s2">"@+id/pickpic"</span>
+        <span class="n">android</span><span class="ss">:layout_marginEnd</span><span class="o">=</span><span class="s2">"58dp"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">Button</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/pickpic"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:text</span><span class="o">=</span><span class="s2">"相册"</span>
+        <span class="n">android</span><span class="ss">:layout_alignParentTop</span><span class="o">=</span><span class="s2">"true"</span>
+        <span class="n">android</span><span class="ss">:layout_alignParentEnd</span><span class="o">=</span><span class="s2">"true"</span>
+        <span class="n">android</span><span class="ss">:layout_marginEnd</span><span class="o">=</span><span class="s2">"73dp"</span> <span class="o">/&gt;</span>
+
+
+	<span class="o">&lt;</span><span class="sr">/RelativeLayout&gt;
+	</span></code></pre></figure>
+
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

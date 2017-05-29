@@ -1,0 +1,454 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">Android Studio中进行JPush的集成</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>22 Dec 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Android">Android</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <p>JPush极光推送是一款能够提供即时通讯的云服务，简单说就是能够向app推送消息，他简单易集成，在android、ios、wp都可以使用。</p>
+
+<p>1.注册登录，然后创建一个新的应用，注意包名要写对，后期不能改。  <br />
+2.下载对应的android example，解压缩</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/12/20/567767360491e.png" alt="image" />    <br />
+3.把example里的libs文件夹拷贝到项目根目录下，如下图</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/12/20/567768351de0a.png" alt="image" />  <br />
+复制 res/drawable-hdpi 中的资源文件到工程的 res/drawable-hdpi/ 目录下，Android Studio复制到drawable文件夹就行</p>
+
+<p>复制 res/layout 中的布局文件到工程的 res/layout/ 目录下</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/12/20/5677693bc35a3.png" alt="image" /></p>
+
+<p>复制res/values/strings.xml 和 res/values/style.xml复制到res/values目录下</p>
+
+<p><img src="https://ooo.0o0.ooo/2015/12/20/567770947ca74.png" alt="image" /></p>
+
+<p>4.修改Manifest.xml文件，把example里的manifest的内容拷贝进来，修改一些报错的包名，注释掉不必要的代码，比如没有被require标记的代码块，直到没有错误。下面是我的manifest文件：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="sc">?&gt;</span>
+	<span class="o">&lt;</span><span class="n">manifest</span> <span class="n">xmlns</span><span class="ss">:android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
+    <span class="n">package</span><span class="o">=</span><span class="s2">"com.jackryannn.ipushtest"</span>
+    <span class="n">android</span><span class="ss">:versionCode</span><span class="o">=</span><span class="s2">"205"</span>
+    <span class="n">android</span><span class="ss">:versionName</span><span class="o">=</span><span class="s2">"2.0.5"</span>
+    <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">sdk</span> <span class="n">android</span><span class="ss">:minSdkVersion</span><span class="o">=</span><span class="s2">"11"</span> <span class="n">android</span><span class="ss">:targetSdkVersion</span><span class="o">=</span><span class="s2">"17"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">permission</span>
+        <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.jackryannn.ipushtest.permission.JPUSH_MESSAGE"</span>
+        <span class="n">android</span><span class="ss">:protectionLevel</span><span class="o">=</span><span class="s2">"signature"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;!--</span> <span class="no">Required</span>  <span class="err">一些系统要求的权限，如访问网络等</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.jackryannn.ipushtest.permission.JPUSH_MESSAGE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.RECEIVE_USER_PRESENT"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.INTERNET"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.WAKE_LOCK"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.READ_PHONE_STATE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.WRITE_EXTERNAL_STORAGE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.READ_EXTERNAL_STORAGE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.WRITE_SETTINGS"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.VIBRATE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.MOUNT_UNMOUNT_FILESYSTEMS"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.ACCESS_NETWORK_STATE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.ACCESS_WIFI_STATE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.SYSTEM_ALERT_WINDOW"</span><span class="o">/&gt;</span>
+
+
+
+    <span class="o">&lt;!--</span> <span class="no">Optional</span> <span class="k">for</span> <span class="n">location</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.ACCESS_COARSE_LOCATION"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.CHANGE_WIFI_STATE"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.ACCESS_FINE_LOCATION"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.permission.CHANGE_NETWORK_STATE"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">application</span>
+        <span class="n">android</span><span class="ss">:icon</span><span class="o">=</span><span class="s2">"@drawable/ic_launcher"</span>
+        <span class="n">android</span><span class="ss">:allowBackup</span><span class="o">=</span><span class="s2">"true"</span>
+        <span class="n">android</span><span class="ss">:label</span><span class="o">=</span><span class="s2">"@string/app_name"</span>
+        <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">".ExampleApplication"</span><span class="o">&gt;</span>
+
+
+        <span class="o">&lt;!--</span> <span class="no">For</span> <span class="nb">test</span> <span class="n">only</span> <span class="err">测试的主程序</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="n">activity</span>
+            <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">".MainActivity"</span>
+            <span class="n">android</span><span class="ss">:theme</span><span class="o">=</span><span class="s2">"@style/AppTheme"</span>
+            <span class="n">android</span><span class="ss">:label</span><span class="o">=</span><span class="s2">"@string/app_name"</span> <span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">intent</span><span class="o">-</span><span class="n">filter</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">action</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.intent.action.MAIN"</span> <span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="n">category</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"android.intent.category.LAUNCHER"</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="sr">/intent-filter&gt;
+        &lt;/</span><span class="n">activity</span><span class="o">&gt;</span>
+        <span class="o">&lt;!--</span> <span class="no">For</span> <span class="nb">test</span> <span class="n">only</span> <span class="err">测试高级功能</span> <span class="o">--&gt;</span>
+        <span class="o">&lt;!--&lt;</span><span class="n">activity</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.example.jpushdemo.PushSetActivity"</span> <span class="n">android</span><span class="ss">:label</span><span class="o">=</span><span class="s2">"@string/app_name"</span><span class="o">&gt;&lt;</span><span class="sr">/activity&gt;--&gt;
+        &lt;!-- For test only 测试设置 --&gt;
+        &lt;!--&lt;activity android:name="com.example.jpushdemo.SettingActivity" android:label="@string/</span><span class="n">app_name</span><span class="s2">"&gt;&lt;/activity&gt;--&gt;
+        &lt;!-- For test only 测试状态通知栏，需要打开的Activity --&gt;
+        &lt;!--&lt;activity android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">example</span><span class="p">.</span><span class="nf">jpushdemo</span><span class="o">.</span><span class="no">TestActivity</span><span class="s2">" android:exported="</span><span class="kp">false</span><span class="s2">"&gt;--&gt;
+            &lt;!--&lt;intent-filter&gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">jpush</span><span class="p">.</span><span class="nf">testAction</span><span class="s2">" /&gt;--&gt;
+                &lt;!--&lt;category android:name="</span><span class="n">jpush</span><span class="p">.</span><span class="nf">testCategory</span><span class="s2">" /&gt;--&gt;
+            &lt;!--&lt;/intent-filter&gt;--&gt;
+        &lt;!--&lt;/activity&gt;--&gt;
+
+
+        &lt;!-- Required SDK核心功能--&gt;
+        &lt;activity
+            android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">ui</span><span class="o">.</span><span class="no">PushActivity</span><span class="s2">"
+            android:configChanges="</span><span class="n">orientation</span><span class="o">|</span><span class="n">keyboardHidden</span><span class="s2">"
+            android:theme="</span><span class="vi">@android</span><span class="ss">:style</span><span class="o">/</span><span class="no">Theme</span><span class="o">.</span><span class="no">NoTitleBar</span><span class="s2">"
+            android:exported="</span><span class="kp">false</span><span class="s2">"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">ui</span><span class="o">.</span><span class="no">PushActivity</span><span class="s2">" /&gt;
+                &lt;category android:name="</span><span class="n">android</span><span class="p">.</span><span class="nf">intent</span><span class="p">.</span><span class="nf">category</span><span class="o">.</span><span class="no">DEFAULT</span><span class="s2">" /&gt;
+                &lt;category android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">ipushtest</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+        &lt;!-- Required  SDK核心功能--&gt;
+        &lt;service
+            android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">service</span><span class="o">.</span><span class="no">DownloadService</span><span class="s2">"
+            android:enabled="</span><span class="kp">true</span><span class="s2">"
+            android:exported="</span><span class="kp">false</span><span class="s2">" &gt;
+        &lt;/service&gt;
+
+
+        &lt;!-- Required SDK 核心功能--&gt;
+        &lt;!-- 可配置android:process参数将PushService放在其他进程中 --&gt;
+        &lt;service
+            android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">service</span><span class="o">.</span><span class="no">PushService</span><span class="s2">"
+            android:enabled="</span><span class="kp">true</span><span class="s2">"
+            android:exported="</span><span class="kp">false</span><span class="s2">"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">REGISTER</span><span class="s2">" /&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">REPORT</span><span class="s2">" /&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">PushService</span><span class="s2">" /&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">PUSH_TIME</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/service&gt;
+
+        &lt;!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 --&gt;
+        &lt;!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 --&gt;
+        &lt;service
+            android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">service</span><span class="o">.</span><span class="no">DaemonService</span><span class="s2">"
+            android:enabled="</span><span class="kp">true</span><span class="s2">"
+            android:exported="</span><span class="kp">true</span><span class="s2">"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">DaemonService</span><span class="s2">" /&gt;
+                &lt;category android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">ipushtest</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+
+        &lt;/service&gt;
+
+        &lt;!-- Required SDK核心功能--&gt;
+        &lt;receiver
+            android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">service</span><span class="o">.</span><span class="no">PushReceiver</span><span class="s2">"
+            android:enabled="</span><span class="kp">true</span><span class="s2">"
+            android:exported="</span><span class="kp">false</span><span class="s2">"&gt;
+            &lt;intent-filter android:priority="</span><span class="mi">1000</span><span class="s2">"&gt;
+                &lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">NOTIFICATION_RECEIVED_PROXY</span><span class="s2">" /&gt;   &lt;!--Required  显示通知栏 --&gt;
+                &lt;category android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">ipushtest</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="</span><span class="n">android</span><span class="p">.</span><span class="nf">intent</span><span class="p">.</span><span class="nf">action</span><span class="o">.</span><span class="no">USER_PRESENT</span><span class="s2">" /&gt;
+                &lt;action android:name="</span><span class="n">android</span><span class="p">.</span><span class="nf">net</span><span class="p">.</span><span class="nf">conn</span><span class="o">.</span><span class="no">CONNECTIVITY_CHANGE</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+            &lt;!-- Optional --&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="</span><span class="n">android</span><span class="p">.</span><span class="nf">intent</span><span class="p">.</span><span class="nf">action</span><span class="o">.</span><span class="no">PACKAGE_ADDED</span><span class="s2">" /&gt;
+                &lt;action android:name="</span><span class="n">android</span><span class="p">.</span><span class="nf">intent</span><span class="p">.</span><span class="nf">action</span><span class="o">.</span><span class="no">PACKAGE_REMOVED</span><span class="s2">" /&gt;
+                &lt;data android:scheme="</span><span class="n">package</span><span class="s2">" /&gt;
+            &lt;/intent-filter&gt;
+
+        &lt;/receiver&gt;
+
+        &lt;!-- Required SDK核心功能--&gt;
+        &lt;receiver android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">service</span><span class="o">.</span><span class="no">AlarmReceiver</span><span class="s2">" android:exported="</span><span class="kp">false</span><span class="s2">"/&gt;
+
+        &lt;!-- User defined.  For test only  用户自定义的广播接收器--&gt;
+        &lt;!--&lt;receiver--&gt;
+            &lt;!--android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">example</span><span class="p">.</span><span class="nf">jpushdemo</span><span class="o">.</span><span class="no">MyReceiver</span><span class="s2">"--&gt;
+            &lt;!--android:exported="</span><span class="kp">false</span><span class="s2">"--&gt;
+            &lt;!--android:enabled="</span><span class="kp">true</span><span class="s2">"&gt;--&gt;
+            &lt;!--&lt;intent-filter&gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">REGISTRATION</span><span class="s2">" /&gt; &amp;lt;!&amp;ndash;Required  用户注册SDK的intent&amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">UNREGISTRATION</span><span class="s2">" /&gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">MESSAGE_RECEIVED</span><span class="s2">" /&gt; &amp;lt;!&amp;ndash;Required  用户接收SDK消息的intent&amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">NOTIFICATION_RECEIVED</span><span class="s2">" /&gt; &amp;lt;!&amp;ndash;Required  用户接收SDK通知栏信息的intent&amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">NOTIFICATION_OPENED</span><span class="s2">" /&gt; &amp;lt;!&amp;ndash;Required  用户打开自定义通知栏的intent&amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">ACTION_RICHPUSH_CALLBACK</span><span class="s2">" /&gt; &amp;lt;!&amp;ndash;Optional 用户接受Rich Push Javascript 回调函数的intent&amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;action android:name="</span><span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">intent</span><span class="o">.</span><span class="no">CONNECTION</span><span class="s2">" /&gt;&amp;lt;!&amp;ndash; 接收网络变化 连接/断开 since 1.6.3 &amp;ndash;&amp;gt;--&gt;
+                &lt;!--&lt;category android:name="</span><span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">ipushtest</span><span class="s2">" /&gt;--&gt;
+            &lt;!--&lt;/intent-filter&gt;--&gt;
+        &lt;!--&lt;/receiver&gt;--&gt;
+
+
+        &lt;!-- Required  . Enable it you can get statistics data with channel --&gt;
+        &lt;meta-data android:name="</span><span class="no">JPUSH_CHANNEL</span><span class="s2">" android:value="</span><span class="n">developer</span><span class="o">-</span><span class="n">default</span><span class="s2">"/&gt;
+        &lt;meta-data android:name="</span><span class="no">JPUSH_APPKEY</span><span class="s2">" android:value="</span><span class="n">d68069d88eca7a38f020faac</span><span class="s2">" /&gt; &lt;!--  &lt;/&gt;值来自开发者平台取得的AppKey--&gt;
+
+    &lt;/application&gt;
+	&lt;/manifest&gt;
+	</span></code></pre></figure>
+
+<p>在module的build.gradle的android节点下添加（项目里已经有这个的就不用添加了）</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="n">defaultConfig</span> <span class="p">{</span>
+    <span class="n">applicationId</span> <span class="s2">"com.jackryannn.ipushtest"</span> <span class="o">/</span><span class="sr">/ &lt;--您应用的包名
+	}
+	</span></code></pre></figure>
+
+<p>5.最后新建一个ExampleApplication继承Application，为了在app中初始化并唯一初始化一次JPush。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="n">package</span> <span class="n">com</span><span class="p">.</span><span class="nf">jackryannn</span><span class="p">.</span><span class="nf">ipushtest</span><span class="p">;</span>
+
+	<span class="n">import</span> <span class="n">android</span><span class="p">.</span><span class="nf">app</span><span class="o">.</span><span class="no">Application</span><span class="p">;</span>
+
+	<span class="n">import</span> <span class="n">cn</span><span class="p">.</span><span class="nf">jpush</span><span class="p">.</span><span class="nf">android</span><span class="p">.</span><span class="nf">api</span><span class="o">.</span><span class="no">JPushInterface</span><span class="p">;</span>
+
+	<span class="kp">public</span> <span class="k">class</span> <span class="nc">ExampleApplication</span> <span class="n">extends</span> <span class="no">Application</span> <span class="p">{</span>
+    <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">();</span>
+        <span class="no">JPushInterface</span><span class="p">.</span><span class="nf">setDebugMode</span><span class="p">(</span><span class="kp">true</span><span class="p">);</span>
+        <span class="no">JPushInterface</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+    <span class="p">}</span>
+	<span class="p">}</span>
+	</code></pre></figure>
+
+<p>运行，但是仍然报错，<code class="highlighter-rouge">Caused by: java.lang.UnsatisfiedLinkError</code>,我的so文件并没有正确导入到项目里。所以要在module的build.gradle的android节点下添加一段代码：</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	    <span class="n">task</span> <span class="n">nativeLibsToJar</span><span class="p">(</span><span class="ss">type: </span><span class="no">Zip</span><span class="p">,</span> <span class="ss">description: </span><span class="s2">"create a jar archive of the native libs"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">destinationDir</span> <span class="n">file</span><span class="p">(</span><span class="s2">"$projectDir/libs"</span><span class="p">)</span>
+        <span class="n">baseName</span> <span class="s2">"Native_Libs2"</span>
+        <span class="n">extension</span> <span class="s2">"jar"</span>
+        <span class="n">from</span> <span class="n">fileTree</span><span class="p">(</span><span class="ss">dir: </span><span class="s2">"libs"</span><span class="p">,</span> <span class="ss">include: </span><span class="s2">"**/*.so"</span><span class="p">)</span>
+        <span class="n">into</span> <span class="s2">"lib"</span>
+    <span class="p">}</span>
+
+    <span class="n">tasks</span><span class="p">.</span><span class="nf">withType</span><span class="p">(</span><span class="no">JavaCompile</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">compileTask</span> <span class="o">-&gt;</span> <span class="n">compileTask</span><span class="p">.</span><span class="nf">dependsOn</span><span class="p">(</span><span class="n">nativeLibsToJar</span><span class="p">)</span>
+    <span class="p">}</span>
+	 </code></pre></figure>
+
+<p>如果log中打印出如下代码<code class="highlighter-rouge">JPush: [ConnectingHelper] Login succeed - sid:43243, serverTime;1450680044000</code>，则说明启动成功，然后就可以在极光推送的控制台下发送推送了或进行其他拓展功能了。</p>
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

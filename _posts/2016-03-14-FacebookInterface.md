@@ -9,8 +9,10 @@ tags:
 
 ---  
   
-#FaceBook接入
-##准备工作  
+FaceBook接入
+===
+准备工作  
+----
     
 1.首先从Android sdk Manager里下载安装extra里的 Google Play Billing Library  
 2.这时候在你的sdk目录下的/extras/google/play_billing/就会又个以.aidl结尾的文件。    
@@ -24,11 +26,13 @@ tags:
 ![image](https://ooo.0o0.ooo/2016/03/09/56e0e0e6dfccc.png)  
 5.在manifest里添加权限：**<uses-permission android:name="com.android.vending.BILLING" />** 到此准备工作基本完成。最后别忘了build一下你的module，让aidl文件生成相应的java文件，才可以使用。  
   
-##建立service连接  
+建立service连接  
+===
   
 在你的MainActivity里添加这段代码，建立app和google play的连接。   
 这个ServiceConnection是bindService()的一个参数，用来表明activity和service的连接状态，如果连接成功则运行onServiceConnected()方法，即给mService赋值。
 
+	{% highlight ruby %}
 	  IInAppBillingService mService;
 	  
     ServiceConnection mServiceConn = new ServiceConnection() {
@@ -48,12 +52,15 @@ tags:
 	Intent serviceIntent =
 	        new Intent("com.android.vending.billing.InAppBillingService.BIND");
 	serviceIntent.setPackage("com.android.vending");
-	bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);  
+	bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE); 
+	{% endhighlight %} 
   
-##商品查询  
+商品查询  
+===
   
 示例代码：  
-	  
+
+	 {% highlight ruby %} 
 	 public void query(View view){
 	//为了防止阻塞主线程，所以新建一个线程
 	        new Thread(){
@@ -92,15 +99,20 @@ tags:
 	
 	        }.run();
 	    }
+	    {% endhighlight %}
   
-##	商品购买    
+商品购买    
+===
 
+	{% highlight ruby %}
       Bundle buyIntentBundle = mService.getBuyIntent(3, getPackageName(),"商品的id", "inapp", "developerPayload（商品的附加信息，google在返回购买信息的时候会返回）");
         PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
         	//这个方法和startActivityForResult类似，然而我看了半天看不懂，只知道最后会调用onActivityResult()。        startIntentSenderForResult(pendingIntent.getIntentSender(), 1001, new Intent(), Integer.valueOf(0), Integer.valueOf(0),Integer.valueOf(0));  
+    {% endhighlight %}
   
 购买完成后会调用onActivityResult()，可以在这里读取数据：  
   
+	{% highlight ruby %}
 	 @Override
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	            if (requestCode == 1001) {
@@ -124,4 +136,4 @@ tags:
 	            }
 	
 	    }  
-
+	{% endhighlight %}

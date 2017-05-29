@@ -1,0 +1,285 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JackRyannn Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://localhost:4000/js/jquery.min.js"></script>
+  <script src="http://localhost:4000/js/bootstrap.min.js"></script>
+  <script src="http://localhost:4000/js/header.js"></script>
+  <script src="http://localhost:4000/js/toc.js"></script>
+  <link href="http://localhost:4000/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/theme.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/syntax.css" rel="stylesheet">
+  <link href="http://localhost:4000/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://localhost:4000/">JackRyannn Blog</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:4000/">/home</a></li>
+          <li><a href="http://localhost:4000/archive.html">/archive</a></li>
+          <li><a href="http://localhost:4000/tags.html">/tags</a></li>
+          <li><a href="http://localhost:4000/about.html">/about</a></li>
+          <li><a href="http://localhost:4000/feed.xml">/RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<div class="container container-center">
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="article">
+        <div class="well">
+
+          <h1><a href="http://localhost:4000">BroadCastReceiver的深入学习</a></h1>
+
+          <div class="post-meta">
+            <div class="post-time">
+              <i class="fa fa-calendar"></i>
+              <time>12 Nov 2015</time>
+            </div>
+            <ul>
+              
+              <li><a href="http://localhost:4000/tag/Andriod">Andriod</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="post-content">
+
+            <!--            <div class="box effect1"></div>-->
+            <div id="toc" class="toc"></div>
+          </div>
+          <h1 id="broadcast-receiver">BroadCast Receiver</h1>
+
+<p>　　今天是11月11日，曾经的光棍节，现在的双十一，对我来说有很多难忘记忆的日子。然而随着时间，它的意义也越来越淡了。</p>
+
+<p>　　今天学习一下broadcast receiver，相比来说我觉得这个比content provider要更简单一点。他可以自动检查系统广播，如果符合，执行里面的onReceiver（）方法。</p>
+
+<p>　　如何判断是否符合呢？这时候就需要给broadcast receiver注册广播（它能够接收的广播）。有两种方法：<br />
+　　1.静态注册：在manifest里注册这个receiver,其中action对应的值就是要注册的广播</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">       <span class="o">&lt;</span><span class="n">receiver</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">".MyBroadCast"</span>
+            <span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">intent</span><span class="o">-</span><span class="n">filter</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">action</span> <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.vipui.broadcast1"</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="sr">/action&gt;
+            &lt;/in</span><span class="n">tent</span><span class="o">-</span><span class="n">filter</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/receiver&gt;
+        </span></code></pre></figure>
+
+<p>　　<br />
+　　2.动态注册：写在activity里</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	 	  <span class="no">MyBroadCast</span> <span class="n">myBroadCast</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">MyBroadCast</span><span class="p">();</span>
+	        <span class="no">IntentFilter</span> <span class="n">intentFilter</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">IntentFilter</span><span class="p">();</span>
+	        <span class="n">intentFilter</span><span class="p">.</span><span class="nf">addAction</span><span class="p">(</span><span class="s2">"com.vipui.broadcast1"</span><span class="p">);</span>
+	        <span class="n">registerReceiver</span><span class="p">(</span><span class="n">myBroadCast</span><span class="p">,</span><span class="n">intentFilter</span><span class="p">);</span>
+	    </code></pre></figure>
+
+<p>二者的区别:</p>
+
+<p>生命周期不同，静态注册是不管你的程序是否处于活动状态，只要安装到手机上，就可以监听得到，然后执行onReceiver()；而动态注册随着程序的结束就销毁了，不能够继续监听。</p>
+
+<h1 id="注意">注意：</h1>
+
+<p>onReceiver()是在主线程运行的，所以并不能执行一些耗时的操作，如果要在其他线程工作，可以通过动态注册的方法实现。</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">	<span class="kp">public</span> <span class="n">abstract</span> <span class="no">Intent</span> <span class="n">registerReceiver</span><span class="p">(</span><span class="no">BroadcastReceiver</span> <span class="n">receiver</span><span class="p">,</span>
+            <span class="no">IntentFilter</span> <span class="n">filter</span><span class="p">,</span> <span class="vi">@Nullable</span> <span class="no">String</span> <span class="n">broadcastPermission</span><span class="p">,</span>
+            <span class="vi">@Nullable</span> <span class="no">Handler</span> <span class="n">scheduler</span><span class="p">);</span>
+    </code></pre></figure>
+
+<p>还有两个发送广播的方法：</p>
+
+<p>1.
+sendOrderedBroadcast(),可以发送有序广播。
+然后在manifest文件里为不同的广播接收器添加优先级，方法是</p>
+<intent-filter android:priority="value">，value是-1000到1000，优先级越高越先执行。
+
+在高的优先级的广播接收器里可以调用abortBroadcast()来中断广播往下传送。
+
+
+  
+
+　　
+  
+  
+</intent-filter>
+
+        </div>
+        
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+         var d = document, s = d.createElement('script');
+         
+         s.src = '//jackryannnblog.disqus.com/embed.js';
+         
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+         })();
+            </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
+        </div>
+    </div>
+    <div class="col-md-4 hidden-xs">
+      <div class="sidebar ">
+  <h1>最近文章</h1>
+  <ul>
+    
+    <li><a href="/2017/05/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%9C%A8%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8">位运算在编程中的使用</a></li>
+    
+    <li><a href="/2017/05/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81%E7%9A%84%E7%90%86%E8%A7%A3">原码反码补码的理解</a></li>
+    
+    <li><a href="/2017/03/CCF%E8%80%83%E8%AF%95%E8%AF%95%E9%A2%98%E4%B9%8B%E6%9D%83%E9%99%90%E6%9F%A5%E8%AF%A2">CCF试题－权限查询</a></li>
+    
+    <li><a href="/2016/03/FacebookInterface">游戏中接入facebook</a></li>
+    
+    <li><a href="/2016/03/InappBilling-in-Google">InappBilling in Google</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h1>标签</h1>
+  <ul>
+    
+      <li><a href="/tag/Android">Android</a></li>
+    
+      <li><a href="/tag/服务器">服务器</a></li>
+    
+      <li><a href="/tag/个人日记">个人日记</a></li>
+    
+      <li><a href="/tag/Java">Java</a></li>
+    
+      <li><a href="/tag/Andriod">Andriod</a></li>
+    
+      <li><a href="/tag/算法">算法</a></li>
+    
+      <li><a href="/tag/Gaker">Gaker</a></li>
+    
+      <li><a href="/tag/转载">转载</a></li>
+    
+      <li><a href="/tag/技术博客">技术博客</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer-distributed">
+    <div class="container">
+        
+        <div class="footer">
+            <p>JackRyannn &copy; 2015</p>
+            <h6>Follow me</h6>
+
+<ul class="social-media">
+    
+    
+    <li>
+        <a title="jackryannn on Github"
+            href="https://github.com/jackryannn"
+            class="github wc-img-replace" target="_blank">Github</a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</ul>
+        </div>
+    </div>
+    
+</footer>
+
+<!--
+  <script type="text/javascript">
+    var disqus_shortname = 'jackryannn';
+
+   (function () {
+     var s = document.createElement('script'); s.async = true;
+     s.type = 'text/javascript';
+     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+   }());
+ </script>
+
+ -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</body>
+
+</html>

@@ -38,9 +38,18 @@ kramdown:
     - autolink
     - footnotes
     - smart
-  use_coderay: true
+  enable_coderay: true
   syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'rougeHighlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
   coderay:
     coderay_line_numbers:  nil
+
+gems: [jekyll-paginate]
 
 exclude: ['README.md', 'LICENSE']
