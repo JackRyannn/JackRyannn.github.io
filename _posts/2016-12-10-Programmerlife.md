@@ -1,7 +1,7 @@
 ---
 author: JackRyannn
 comments: true
-date: 2015-12-03 11:15:00 -0700
+date: 2016-12-03 11:15:00 -0700
 layout: post
 title: 程序员的生活
 tags:

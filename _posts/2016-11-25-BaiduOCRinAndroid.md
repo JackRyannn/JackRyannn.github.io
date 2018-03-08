@@ -1,7 +1,7 @@
 ---
 author: JackRyannn
 comments: true
-date: 2015-11-25 11:15:00 -0700
+date: 2016-11-25 11:15:00 -0700
 layout: post
 title: Android系统中百度OCR的使用说明
 tags:

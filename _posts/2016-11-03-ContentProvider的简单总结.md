@@ -1,7 +1,7 @@
 ---
 author: JackRyannn
 comments: true
-date: 2015-11-03 10:18:06 -0700
+date: 2016-11-03 10:18:06 -0700
 layout: post
 title: ContentProvider的简单总结
 tags:

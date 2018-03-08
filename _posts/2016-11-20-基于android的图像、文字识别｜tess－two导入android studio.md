@@ -1,7 +1,7 @@
 ---
 author: JackRyannn
 comments: true
-date: 2015-11-20 11:31:00 -0700
+date: 2016-11-20 11:31:00 -0700
 layout: post
 title: 基于android的图像、文字识别｜tess－two导入android studio
 tags:

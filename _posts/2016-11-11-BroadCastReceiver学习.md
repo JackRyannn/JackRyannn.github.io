@@ -1,7 +1,7 @@
 ---
 author: JackRyannn
 comments: true
-date: 2015-11-11 11:16:00 -0700
+date: 2016-11-11 11:16:00 -0700
 layout: post
 title: BroadCastReceiver的深入学习
 tags:
